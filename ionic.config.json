@@ -1,0 +1,8 @@
+{
+  "name": "xarxesApp",
+  "app_id": "1cbc7b54",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
