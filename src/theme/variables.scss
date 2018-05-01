@@ -23,6 +23,10 @@ $app-direction: ltr;
 // http://ionicframework.com/docs/theming/overriding-ionic-variables/
 
 
+$toolbar-background: transparent !default;
+$text-color: #784a46 !default;
+$background-color: #eb8a3e;
+$tabs-background: #ebb582;
 
 
 // Named Color Variables
@@ -34,11 +38,13 @@ $app-direction: ltr;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    #488aff,
-  secondary:  #32db64,
-  danger:     #f53d3d,
-  light:      #f4f4f4,
-  dark:       #222
+
+  // Sunkissed village // Plastidecors
+  primary:    #eb8a3e,
+  secondary:  #d24136,
+  //danger:     #f53d3d,
+  light:      #ebb582,
+  dark:       #784a46
 );
 
 

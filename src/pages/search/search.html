@@ -1,23 +1,44 @@
 <ion-header>
-<!--
+
+  <!--
   <ion-navbar>
-    <ion-title>Search</ion-title>
+    <ion-title text-center>Xarxes</ion-title>
   </ion-navbar>
--->
+  -->
 </ion-header>
 
 <ion-content padding>
-  <h2>Search</h2>
+  <ion-grid style="height: 100%">
 
-  <ion-searchbar (ionInput)="searchNames($event)"></ion-searchbar>
+    <ion-row align-items-center style="height: 100%">
+      <ion-col>
 
 
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+        <ion-row justify-content-center>
+            <h1>Xarxes</h1>
+        </ion-row>
+      
+        <ion-row justify-content-center>
+          <ion-col col-2>
+          </ion-col>
+          <ion-col col-8>
+            <ion-searchbar (ionInput)="searchNames($event)" placeholder="Insertar nom"></ion-searchbar>
+          </ion-col>
+          <ion-col col-2>
+          </ion-col>
+        </ion-row>
+
+        <ion-row justify-content-center>
+          <button ion-button large clear color="dark">+ filtres </button>
+        </ion-row>
+
+        <ion-row justify-content-center>
+          <button ion-button large color="secondary">Buscar</button>
+        </ion-row>
+
+
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
 </ion-content>
