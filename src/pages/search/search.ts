@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { FavoritesPage } from '../favorites/favorites';
+import { ListPage } from '../list/list';
 
 @Component({
   selector: 'page-search',
@@ -11,7 +13,7 @@ export class SearchPage {
 
   }
 
-  searchNames(event: any) {
+  searchNamesInput(event: any) {
     // set val to the value of the searchbar
     var searchValue = event.target.value;
 
@@ -25,5 +27,11 @@ export class SearchPage {
       */
     }
   }
+
+  searchNamesButton(event, item) {
+    this.navCtrl.push(ListPage, {
+      item: item
+    });
+}
 
 }

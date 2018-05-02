@@ -22,18 +22,18 @@
           <ion-col col-2>
           </ion-col>
           <ion-col col-8>
-            <ion-searchbar (ionInput)="searchNames($event)" placeholder="Insertar nom"></ion-searchbar>
+            <ion-searchbar (ionInput)="searchNamesInput($event)" placeholder="Insertar nom"></ion-searchbar>
           </ion-col>
           <ion-col col-2>
           </ion-col>
         </ion-row>
-
+        
         <ion-row justify-content-center>
           <button ion-button large clear color="dark">+ filtres </button>
         </ion-row>
 
         <ion-row justify-content-center>
-          <button ion-button large color="secondary">Buscar</button>
+          <button ion-button large color="secondary" strong="true" (click)="searchNamesButton($event)">Buscar</button>
         </ion-row>
 
 
