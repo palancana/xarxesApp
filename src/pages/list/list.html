@@ -16,12 +16,13 @@
 <ion-content>
   <ion-list>
 
-      <button ion-item (click)="showItem($event)">
+      <button ion-item *ngFor="let person of peoples" (click)="showDetailOf(person)">
         <ion-icon name="leaf" item-start></ion-icon>
-          <h2>Pedro Dot Martinez</h2>
+          <h2>{{person}}</h2>
           <p>1880 - 1960</p>
         <ion-icon name="rose" item-end></ion-icon>
       </button>
+
     </ion-list>
 
 </ion-content>

@@ -7,6 +7,7 @@ import { AboutPage } from '../pages/about/about';
 import { FavoritesPage } from '../pages/favorites/favorites';
 import { SearchPage } from '../pages/search/search';
 import { ListPage } from '../pages/list/list';
+import { DetailsPage } from '../pages/details/details';
 import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -19,6 +20,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     FavoritesPage,
     SearchPage,
     ListPage,
+    DetailsPage,
     TabsPage
   ],
   imports: [
@@ -32,6 +34,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     FavoritesPage,
     SearchPage,
     ListPage,
+    DetailsPage,
     TabsPage
   ],
   providers: [
