@@ -15,27 +15,6 @@ $app-direction: ltr;
 @import "ionic.globals";
 
 
-// Shared Variables
-// --------------------------------------------------
-// To customize the look and feel of this app, you can override
-// the Sass variables found in Ionic's source scss files.
-// To view all the possible Ionic variables, see:
-// http://ionicframework.com/docs/theming/overriding-ionic-variables/
-
-
-$toolbar-background: transparent !default;
-$text-color: #784a46 !default;
-$background-color: #eb8a3e;
-$tabs-background: #ebb582;
-
-/// @prop - Border color of the searchbar
-//$searchbar-ios-border-color: red !default;
-/// @prop - Color of the searchbar input search icon
-//$searchbar-ios-input-search-icon-color:orange !default;
-/// @prop - Background of the searchbar input
-//$searchbar-ios-input-background-color: red !default;
-
-
 // Named Color Variables
 // --------------------------------------------------
 // Named colors makes it easy to reuse colors on various components.
@@ -45,14 +24,29 @@ $tabs-background: #ebb582;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-
-  // Sunkissed village // Plastidecors
-  primary:    #eb8a3e,
-  secondary:  #d24136,
-  //danger:     #f53d3d,
-  light:      #ebb582,
-  dark:       #784a46
+  primary:    #EB8F00, //used for buttons and important things
+  secondary:  #C6E484, //used for other important things, as tabs background
+  back:       #05836E, //Main background color
+  light:      #979797, //used for light text
+  dark:       #979797, //used for dark text
+  favorite:   #69BB7B
 );
+
+// Shared Variables
+// --------------------------------------------------
+// To customize the look and feel of this app, you can override
+// the Sass variables found in Ionic's source scss files.
+// To view all the possible Ionic variables, see:
+// http://ionicframework.com/docs/theming/overriding-ionic-variables/
+
+$toolbar-background: color($colors, secondary);
+$tabs-tab-color-active: color($colors, primary);
+$tabs-background: color($colors, secondary);
+$background-color: color($colors, back);
+$list-border-color: color($colors, secondary);
+$text-color: #979797;
+$card-md-header-color: #979797;
+$card-ios-header-color: #979797;
 
 
 // App iOS Variables
@@ -97,5 +91,14 @@ $colors: (
 // Fonts
 // --------------------------------------------------
 
+
 @import "roboto";
 @import "noto-sans";
+
+@font-face {
+  font-family: 'VT323';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../assets/fonts/VT323-Regular.ttf');
+}
+

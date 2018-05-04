@@ -1,44 +1,33 @@
-<ion-header>
+<ion-header no-border>
 
-  <!--
+<!--
   <ion-navbar>
     <ion-title text-center>Xarxes</ion-title>
   </ion-navbar>
-  -->
+-->
 </ion-header>
 
-<ion-content padding>
-  <ion-grid style="height: 100%">
+<ion-content class="search">
+  <ion-grid style="height: 100%" no-padding>
 
-    <ion-row align-items-center style="height: 100%">
-      <ion-col>
-
-
-        <ion-row justify-content-center>
+        <ion-row align-items-end justify-content-center style="height: 33.33%">
             <h1>Xarxes</h1>
         </ion-row>
       
-        <ion-row justify-content-center>
-          <ion-col col-2>
-          </ion-col>
-          <ion-col col-8>
-            <ion-searchbar (ionInput)="searchNamesInput($event)" placeholder="Insertar nom"></ion-searchbar>
-          </ion-col>
-          <ion-col col-2>
+        <ion-row align-items-center style="height: 33.33%">
+          <ion-col>
+            <ion-row justify-content-center>
+                <ion-searchbar class="searchBar" col-10 mode="md" (ionInput)="searchNamesInput($event)" placeholder="Insertar nom"></ion-searchbar>
+            </ion-row>
+            <ion-row justify-content-start>
+                <button offset-1 col-4 ion-button large block strong="true" clear>+ filtres </button>
+            </ion-row>
           </ion-col>
         </ion-row>
-        
-        <ion-row justify-content-center>
-          <button ion-button large clear color="dark">+ filtres </button>
+
+        <ion-row align-items-start justify-content-center style="height: 33.33%">
+            <button class="searchButton" col-4 ion-button mode="md" large block strong="true" (click)="searchNamesButton($event)">BUSCAR</button>
         </ion-row>
-
-        <ion-row justify-content-center>
-          <button ion-button large color="secondary" strong="true" (click)="searchNamesButton($event)">Buscar</button>
-        </ion-row>
-
-
-      </ion-col>
-    </ion-row>
 
   </ion-grid>
 </ion-content>

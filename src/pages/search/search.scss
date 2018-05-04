@@ -1,3 +1,29 @@
 page-search {
 
+    .search {
+        background-color: map-get($colors, background-color);
+        
+    }
+
+
+    h1 {
+    //font-family: "VT323" !important;
+    font-family: VT323;
+    color: map-get($colors, primary);
+    font-size: 16.5vh; // View-Height, half the size of the 33.33% that the row takes.
+    text-shadow: 0 4px 4px rgba(0,0,0,0.50);
+    }
+
+    .searchButton {
+        box-shadow: 0 4px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 7px;
+        font-family: Thonburi-Bold;
+        font-size: 22px;
+        color: #F4FFFE;
+    }
+
+    .searchBar {
+        /* Rectangle: */
+    }
+
 }
