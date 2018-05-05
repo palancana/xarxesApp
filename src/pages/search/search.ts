@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { FavoritesPage } from '../favorites/favorites';
+//import { FavoritesPage } from '../favorites/favorites';
 import { ListPage } from '../list/list';
+import { Observable } from 'rxjs/Observable';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'page-search',
@@ -9,7 +11,12 @@ import { ListPage } from '../list/list';
 })
 export class SearchPage {
 
-  constructor(public navCtrl: NavController) {
+  films: Observable<any>;
+
+  constructor(public navCtrl: NavController, public httpClient: HttpClient) {
+    this.films = this.httpClient.get('https://swapi.co/api/films');
+    this.films.subscribe(data => {console.log('my data: ', data);})
+
 
   }
 
@@ -28,10 +35,8 @@ export class SearchPage {
     }
   }
 
-  searchNamesButton(event, item) {
-    this.navCtrl.push(ListPage, {
-      item: item
-    });
+  searchNamesButton(event, film) {
+    this.navCtrl.push(ListPage, {film: film});
 }
 
 }

@@ -26,7 +26,8 @@ $app-direction: ltr;
 $colors: (
   primary:    #EB8F00, //used for buttons and important things
   secondary:  #C6E484, //used for other important things, as tabs background
-  back:       #05836E, //Main background color
+  main-back:  #05836E, //Main background color
+  back:       #ffffff, //Secondary background color
   light:      #979797, //used for light text
   dark:       #979797, //used for dark text
   favorite:   #69BB7B
@@ -39,7 +40,7 @@ $colors: (
 // To view all the possible Ionic variables, see:
 // http://ionicframework.com/docs/theming/overriding-ionic-variables/
 
-$toolbar-background: color($colors, secondary);
+$toolbar-background: color($colors, main-back);
 $tabs-tab-color-active: color($colors, primary);
 $tabs-background: color($colors, secondary);
 $background-color: color($colors, back);
