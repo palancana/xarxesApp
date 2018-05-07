@@ -10,25 +10,35 @@ page-search {
     //font-family: "VT323" !important;
     font-family: VT323;
     color: map-get($colors, primary);
-    font-size: 16.5vh; // View-Height, half the size of the 33.33% that the row takes.
+    font-size: calc(50px + 16vw); // View-Height, half the size of the 33.33% that the row takes.
     text-shadow: 0 4px 4px rgba(0,0,0,0.50);
     }
 
     .searchButton {
         box-shadow: 0 4px 4px 0 rgba(0,0,0,0.50);
         border-radius: 7px;
-        font-size: 22px;
+        font-size: calc(10px + 3vw);
     }
 
-    .filters {
-        font-size: 20px;
+    .filters .button-inner{
+        font-size: calc(10px + 3vw);
+        text-align: left;
+        justify-content: flex-start;
+        text-align : left;
         color: #C6E484;
         text-align: right;
         text-shadow: 0 2px 2px rgba(0,0,0,0.50);
     }
 
     .searchBar {
-        /* Rectangle: */
+        font-weight: bold;
+        color: #5B5656;
+        font-size: calc(10px + 2vw);
+        padding-left: 15px;
+        background: #E7E5E5;
+        border: 1px solid #979797;
+        box-shadow: 0 1px 0 0 rgba(0,0,0,0.50), 0 1px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 6px;
     }
 
 }

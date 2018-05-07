@@ -10,6 +10,14 @@
 <ion-content class="search">
   <ion-grid style="height: 100%" no-padding>
 
+      <!-- How-to iterate through a list in json
+      <ion-list>
+        <ion-item *ngFor="let post of posts">
+          <p>{{post.director}}</p>
+        </ion-item>
+      </ion-list>
+      -->
+
         <ion-row align-items-end justify-content-center style="height: 33.33%">
             <h1>Xarxes</h1>
         </ion-row>
@@ -17,10 +25,11 @@
         <ion-row align-items-center style="height: 33.33%">
           <ion-col>
             <ion-row justify-content-center>
-                <ion-searchbar class="searchBar" col-10 mode="md" (ionInput)="searchNamesInput($event)" placeholder="Insertar nom"></ion-searchbar>
+                <!-- <ion-searchbar class="searchBar" col-10 mode="md" (ionInput)="searchNamesInput($name)" placeholder="Insertar nom"></ion-searchbar> -->
+                  <ion-input col-10 class="searchBar" mode="ios" type="search" placeholder="Insertar nom" [(ngModel)]="name" ></ion-input>
             </ion-row>
             <ion-row justify-content-start>
-                <button class="filters" offset-1 col-4 ion-button large block strong="true" clear>+ filtres </button>
+                <button class="filters" mode="ios" offset-1 col-4 ion-button large block strong="true" clear>+ filtres </button>
             </ion-row>
           </ion-col>
         </ion-row>

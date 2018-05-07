@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 //import { FavoritesPage } from '../favorites/favorites';
 import { ListPage } from '../list/list';
-import { Observable } from 'rxjs/Observable';
-import { HttpClient } from '@angular/common/http';
+
+//import { Http } from '@angular/http';
+//import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'page-search',
@@ -11,16 +12,29 @@ import { HttpClient } from '@angular/common/http';
 })
 export class SearchPage {
 
-  films: Observable<any>;
+  name: any;
 
-  constructor(public navCtrl: NavController, public httpClient: HttpClient) {
-    this.films = this.httpClient.get('https://swapi.co/api/films');
-    this.films.subscribe(data => {console.log('my data: ', data);})
+  //posts: any;
 
+  // Constructor needed for http get: public http:Http
+  constructor(public navCtrl: NavController) {
 
+    /* Access a JSON so the HTML can read it
+    this.http.get('https://swapi.co/api/films/?format=json').map(res => res.json()).subscribe(
+      data => {
+          this.posts = data.results;
+          console.log(this.posts);
+      },
+      err => {
+          console.log("Oops!");
+      }
+    );
+    */
+  
   }
 
   searchNamesInput(event: any) {
+    
     // set val to the value of the searchbar
     var searchValue = event.target.value;
 
@@ -35,8 +49,9 @@ export class SearchPage {
     }
   }
 
-  searchNamesButton(event, film) {
-    this.navCtrl.push(ListPage, {film: film});
+  searchNamesButton(name) {
+    console.log(this.name);
+    //this.navCtrl.push(ListPage, {name: name});
 }
 
 }
