@@ -18,7 +18,12 @@ export class ListPage {
 
   peoples: any;
 
+  name: any;
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+
+    this.name = navParams.get('data');
+    console.log(this.name);
 
     this.peoples = [
       'Pedro Dot Martinez',

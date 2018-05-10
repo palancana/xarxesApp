@@ -12,8 +12,6 @@ import { ListPage } from '../list/list';
 })
 export class SearchPage {
 
-  name: any;
-
   //posts: any;
 
   // Constructor needed for http get: public http:Http
@@ -33,25 +31,10 @@ export class SearchPage {
   
   }
 
-  searchNamesInput(event: any) {
-    
-    // set val to the value of the searchbar
-    var searchValue = event.target.value;
-
-    // if the value is an empty string don't filter the items
-    if (searchValue && searchValue.trim() != '') {
-      console.log(searchValue);
-      /* Do things
-      this.items = this.items.filter((item) => {
-        return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
-      })
-      */
-    }
-  }
-
   searchNamesButton(name) {
-    console.log(this.name);
-    //this.navCtrl.push(ListPage, {name: name});
+    name = name || 'No name Entered';
+
+    this.navCtrl.push(ListPage, {data: name});
 }
 
 }

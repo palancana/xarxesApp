@@ -27,7 +27,7 @@
             <ion-row justify-content-center>
               <ion-item col-10 class="searchBar">
                 <!-- <ion-searchbar class="searchBar" col-10 mode="md" (ionInput)="searchNamesInput($name)" placeholder="Insertar nom"></ion-searchbar> -->
-                <ion-input type="search" mode="ios" placeholder="Insertar nom" [(ngModel)]="name" ></ion-input>
+                <ion-input type="search" mode="ios" placeholder="Insertar nom" #name></ion-input>
               </ion-item>
             </ion-row>
             <ion-row justify-content-start>
@@ -37,7 +37,7 @@
         </ion-row>
 
         <ion-row align-items-start justify-content-center style="height: 33.33%">
-            <button class="searchButton" col-4 ion-button mode="md" large block strong="true" (click)="searchNamesButton($event)">BUSCAR</button>
+            <button class="searchButton" col-4 ion-button mode="md" large block strong="true" (click)="searchNamesButton(name.value)">BUSCAR</button>
         </ion-row>
 
   </ion-grid>
