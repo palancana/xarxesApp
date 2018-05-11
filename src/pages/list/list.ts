@@ -2,12 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DetailsPage } from '../details/details';
 
-/**
- * Generated class for the ListPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { Http } from '@angular/http';
+import 'rxjs/add/operator/map';
 
 @IonicPage()
 @Component({
@@ -17,14 +13,25 @@ import { DetailsPage } from '../details/details';
 export class ListPage {
 
   peoples: any;
-
   name: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http) {
 
     this.name = navParams.get('data');
-    console.log(this.name);
+    //console.log(this.name);
 
+    this.http.get('https://swapi.co/api/people/?search='+ this.name).map(res => res.json()).subscribe(
+      data => {
+          this.peoples = data.results;
+          //console.log(this.peoples);
+      },
+      err => {
+          console.log("Oops!");
+      }
+    );
+
+
+    /*
     this.peoples = [
       'Pedro Dot Martinez',
       'Eduard Garcia Díaz',
@@ -34,26 +41,15 @@ export class ListPage {
       'Dolores Fuertes',
       'Jimena Jimenez',
       'Aitor Tilla',
-      'Pedro Dot Martinez',
-      'Eduard Garcia Díaz',
-      'Jose Antonio Perez',
-      'Maria Granada Cuenca',
-      'Lorena Garcia',
-      'Dolores Fuertes',
-      'Pedro Dot Martinez',
-      'Eduard Garcia Díaz',
-      'Jose Antonio Perez',
-      'Maria Granada Cuenca',
-      'Lorena Garcia',
-      'Dolores Fuertes'
     ];
+    */
   }
 
 
   showDetailOf(person: any) {
-    console.log(person);
+    //console.log(person);
     this.navCtrl.push(DetailsPage, {
-      item: person
+      data: person
     });
   }
 

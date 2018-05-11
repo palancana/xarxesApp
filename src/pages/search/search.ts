@@ -32,7 +32,7 @@ export class SearchPage {
   }
 
   searchNamesButton(name) {
-    name = name || 'No name Entered';
+    name = name || '';
 
     this.navCtrl.push(ListPage, {data: name});
 }
