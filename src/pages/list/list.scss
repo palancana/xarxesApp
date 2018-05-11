@@ -1,3 +1,35 @@
 page-list {
 
+    .card-item {
+        background: #FFFFFF;
+        box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 4px;
+    }
+
+    .card-title {
+        //font-family: Rockwell-Regular;
+        font-size: 20px;
+        color: #2A2828;
+    }
+
+    .card-place {
+        //font-family: Rockwell-Regular;
+        font-size: 15px;
+        color: #908E90;
+    }
+
+    .card-date {
+        //font-family: Rockwell-Regular;
+        font-size: 14px;
+        color: #027562;
+        text-align: right;
+    }
+
+    .card-icon {
+        font-size: 30px;
+        color: #9B9B9B;
+        text-align: right;
+    }
+
+
 }

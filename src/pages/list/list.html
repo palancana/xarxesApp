@@ -1,9 +1,3 @@
-<!--
-  Generated template for the ListPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
@@ -14,15 +8,52 @@
 
 
 <ion-content>
-  <ion-list>
 
+
+    <ion-card class="card-item" *ngFor="let person of peoples" (click)="showDetailOf(person)">
+        <ion-card-content>
+          <ion-card-title class="card-title" item-end>
+            <h1>{{person.name}}</h1>
+          </ion-card-title>
+          <p class="card-place">{{person.hair_color}}</p>
+          <p class="card-date" item-end>{{person.birth_year}}</p>
+
+        </ion-card-content>
+      </ion-card>
+
+
+  <!--
       <button ion-item *ngFor="let person of peoples" (click)="showDetailOf(person)">
+        <ion-card>
+          <ion-item>
+              
+                  <h2>{{person.name}}</h2>
+                <p>{{person.birth_year}}</p>
+
+            <ion-icon name="rose" item-end></ion-icon>
+          </ion-item>
+        </ion-card>
+        </button>
+        
+          <ion-card-header>
+            Header
+          </ion-card-header>
+          <ion-card-content>
+            The British use the term "header", but the American term "head-shot" the English simply refuse to adopt.
+          </ion-card-content>
+        </ion-card>
+      
+      
+      
+      
+      
         <ion-icon name="leaf" item-start></ion-icon>
           <h2>{{person.name}}</h2>
           <p>{{person.birth_year}}</p>
-        <ion-icon name="rose" item-end></ion-icon>
+       
       </button>
 
-    </ion-list>
+    -->
+
 
 </ion-content>

@@ -29,22 +29,7 @@ export class ListPage {
           console.log("Oops!");
       }
     );
-
-
-    /*
-    this.peoples = [
-      'Pedro Dot Martinez',
-      'Eduard Garcia Díaz',
-      'Jose Antonio Perez',
-      'Maria Granada Cuenca',
-      'Lorena Garcia',
-      'Dolores Fuertes',
-      'Jimena Jimenez',
-      'Aitor Tilla',
-    ];
-    */
   }
-
 
   showDetailOf(person: any) {
     //console.log(person);
