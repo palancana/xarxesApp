@@ -1,10 +1,5 @@
 page-list {
 
-    .title {
-        /* Xarxes: */
-        text-shadow: 0 4px 4px rgba(0,0,0,0.50);
-    }
-
     .card-item {
         background: #FFFFFF;
         box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
@@ -16,7 +11,6 @@ page-list {
     }
 
     .card-title {
-        //font-family: Rockwell-Regular;
         font-size: 20px;
         color: #2A2828;
         margin-bottom: 0;
@@ -31,14 +25,12 @@ page-list {
     }
 
     .card-place {
-        //font-family: Rockwell-Regular;
         font-size: 15px;
         color: #908E90;
         margin-bottom: 0;
     }
 
     .card-dates {
-        //font-family: Rockwell-Regular;
         font-size: 14px;
         color: #027562;
         text-align: right;
@@ -59,7 +51,7 @@ page-list {
     }
 
     .chip-text {
-        font-family: Rockwell-Bold;
+        font-weight: bold;
         font-size: 14px;
         color: #3C3A3A;
         text-align: right;

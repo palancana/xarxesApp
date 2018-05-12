@@ -27,7 +27,7 @@ $colors: (
   primary:    #EB8F00, //used for buttons and important things
   secondary:  #C6E484, //used for other important things, as tabs background
   main-back:  #05836E, //Main background color
-  back:       #ffffff, //Secondary background color
+  back:       #F4F4F7, //Secondary background color
   light:      #979797, //used for light text
   dark:       #979797, //used for dark text
   favorite:   #69BB7B
@@ -50,6 +50,11 @@ $card-md-header-color: #979797;
 $card-ios-header-color: #979797;
 $toolbar-md-title-text-color: color($colors, primary);
 $toolbar-ios-title-text-color: color($colors, primary);
+$toolbar-ios-button-color: color($colors, primary);
+$toolbar-ios-title-font-weight: none;
+
+
+
 
 // App iOS Variables
 // --------------------------------------------------
