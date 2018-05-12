@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{name}}</ion-title>
+    <ion-title class="title">Xarxes</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -9,14 +9,55 @@
 
 <ion-content>
 
+  <div padding>
+    <ion-chip class="chip" #chip1>
+        <ion-label class="chip-text">{{name}}</ion-label>
+        <button ion-button clear color="light" (click)="delete(chip1)">
+          <ion-icon name="close"></ion-icon>
+        </button>
+      </ion-chip>
+
+    <ion-chip class="chip" #chip2>
+        <ion-label class="chip-text">Second filter</ion-label>
+        <button ion-button clear color="light" (click)="delete(chip2)">
+          <ion-icon name="close"></ion-icon>
+        </button>
+      </ion-chip>
+
+
+        <ion-chip class="chip" #chip3>
+            <ion-label class="chip-text">Date filter</ion-label>
+            <button ion-button clear color="light" (click)="delete(chip3)">
+              <ion-icon name="close"></ion-icon>
+            </button>
+          </ion-chip>
+
+          <ion-chip class="chip" #chip4>
+              <ion-label class="chip-text">W</ion-label>
+              <button ion-button clear color="light" (click)="delete(chip4)">
+                <ion-icon name="close"></ion-icon>
+              </button>
+            </ion-chip>
+
+
+    </div>
+
 
     <ion-card class="card-item" *ngFor="let person of peoples" (click)="showDetailOf(person)">
-        <ion-card-content>
+        <ion-icon class="card-arrow" name="arrow-forward"></ion-icon>
+
+        
+
+      <ion-card-content no-padding>
           <ion-card-title class="card-title" item-end>
             <h1>{{person.name}}</h1>
+            
           </ion-card-title>
+
+          <div>
           <p class="card-place">{{person.hair_color}}</p>
-          <p class="card-date" item-end>{{person.birth_year}}</p>
+          <p class="card-dates">{{person.birth_year}}</p>
+        </div>
 
         </ion-card-content>
       </ion-card>

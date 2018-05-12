@@ -31,6 +31,10 @@ export class ListPage {
     );
   }
 
+  delete(chip: Element) {
+    chip.remove();
+  }
+
   showDetailOf(person: any) {
     //console.log(person);
     this.navCtrl.push(DetailsPage, {
