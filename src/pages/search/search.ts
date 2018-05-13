@@ -8,7 +8,38 @@ import { ListPage } from '../list/list';
 })
 export class SearchPage {
 
+  shouldHide: any;
+  filtersButtonText: any;
+
+  dual :any;
+  text:1;
+  knobValues: any = {
+  upper:1959,
+  lower:1845
+}
+
   constructor(public navCtrl: NavController) {
+    this.dual = this.dual;
+    this.shouldHide = true;
+    this.filtersButtonText = "+ filtres";
+  }
+
+  showHideBox() {
+    if (this.shouldHide == true) {
+      this.shouldHide = false;
+      this.filtersButtonText = "- filtres";
+    } else {
+      this.shouldHide = true;
+      this.filtersButtonText = "+ filtres";
+    }
+
+    /*
+    var x = document.getElementById("box");
+    if(x.style.display == "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }*/
 
   }
 

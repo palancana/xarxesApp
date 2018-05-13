@@ -23,12 +23,59 @@
               </ion-item>
             </ion-row>
             <ion-row justify-content-start>
-                <button class="filters" mode="ios" offset-1 col-4 ion-button large block strong="true" clear>+ filtres </button>
+                <button class="filtersButton" mode="ios" offset-1 col-4 ion-button large block strong="true" clear (click)="showHideBox()">{{filtersButtonText}}</button>
+                
+                    <ion-card #filtersBox class="filters" [hidden]="shouldHide">
+                        <ion-card-content no-padding>
+                          
+                          
+                            <ion-list>
+                              <!-- Població -->
+                                <ion-item class="filtersBoxItem">
+                                  <ion-label>Toppings</ion-label>
+                                  <ion-select [(ngModel)]="toppings" multiple="true" cancelText="Nah" okText="Okay!">
+                                    <ion-option value="bacon" selected="true">Bacon</ion-option>
+                                    <ion-option value="olives">Black Olives</ion-option>
+                                    <ion-option value="xcheese" selected="true">Extra Cheese</ion-option>
+                                  </ion-select>
+                                </ion-item>
+                              
+                                <!-- Periode de temps -->
+                                <ion-item class="filtersBoxItem">
+                                    <ion-label>Periode {{knobValues.lower}} - {{knobValues.upper}} </ion-label>
+                                    <ion-range dualKnobs="true" [(ngModel)]="knobValues" min="1845" max="1959" step="1"></ion-range>
+                                </ion-item>
+
+                                <!-- Apareix a la Wikipedia checkbox -->
+                                <ion-item class="filtersBoxItem">
+                                    <ion-label>Sausage</ion-label>
+                                    <ion-checkbox [(ngModel)]="sausage" disabled="true"></ion-checkbox>
+                                  </ion-item>
+                              
+                              
+                              </ion-list>
+
+                            
+
+                          
+
+
+
+
+
+
+                        </ion-card-content>
+                      
+                      </ion-card>
+
             </ion-row>
           </ion-col>
         </ion-row>
 
-        <ion-row align-items-start justify-content-center style="height: 33.33%">
+
+      
+
+        <ion-row justify-content-center style="height: 33.33%">
             <button class="searchButton" col-4 ion-button mode="md" large block strong="true" (click)="searchNamesButton(name.value)">BUSCAR</button>
         </ion-row>
 

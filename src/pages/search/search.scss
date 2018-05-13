@@ -5,7 +5,6 @@ page-search {
         
     }
 
-
     h1 {
     //font-family: "VT323" !important;
     font-family: VT323;
@@ -20,7 +19,7 @@ page-search {
         font-size: calc(10px + 3vw);
     }
 
-    .filters .button-inner{
+    .filtersButton .button-inner{
         font-size: calc(10px + 3vw);
         text-align: left;
         justify-content: flex-start;
@@ -28,6 +27,19 @@ page-search {
         color: #C6E484;
         text-align: right;
         text-shadow: 0 2px 2px rgba(0,0,0,0.50);
+    }
+
+    .filters {
+        border: 2px solid #7CC6B9;
+        background: map-get($colors, main-back);
+        box-shadow: none;
+
+    }
+
+    .filtersBoxItem {
+        font-weight: bold;
+        background: map-get($colors, main-back);
+        color: white;
     }
 
     .searchBar {
