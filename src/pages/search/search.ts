@@ -14,8 +14,8 @@ export class SearchPage {
   dual :any;
   text:1;
   knobValues: any = {
-  upper:1959,
-  lower:1845
+    upper:1959,
+    lower:1845
 }
 
   constructor(public navCtrl: NavController) {

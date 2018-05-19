@@ -11,3 +11,6 @@ import { DetailsPage } from './details';
   ],
 })
 export class DetailsPageModule {}
+
+
+

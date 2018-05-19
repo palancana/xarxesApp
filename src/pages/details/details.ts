@@ -17,6 +17,7 @@ export class DetailsPage {
 
   person: any;
 
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
 
     this.person = navParams.get('data');
@@ -26,5 +27,7 @@ export class DetailsPage {
   ionViewDidLoad() {
     //console.log('ionViewDidLoad DetailsPage');
   }
+
+  
 
 }
