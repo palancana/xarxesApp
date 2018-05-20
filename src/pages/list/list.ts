@@ -14,11 +14,13 @@ export class ListPage {
 
   peoples: any;
   name: any;
+  wiki: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http) {
 
     this.name = navParams.get('data');
     //console.log(this.name);
+
 
     this.http.get('https://swapi.co/api/people/?search='+ this.name).map(res => res.json()).subscribe(
       data => {
@@ -29,6 +31,7 @@ export class ListPage {
           console.log("Oops!");
       }
     );
+
   }
 
   delete(chip: Element) {
