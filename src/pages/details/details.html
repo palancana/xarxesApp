@@ -11,24 +11,17 @@
   <p>Data naixement: {{person.birth_year}}</p>
   <p>Data mort: Desconegut</p>
 
-  <!--
-  <ion-card >
-    <img src={{personImage}}/>
-    <ion-card-header>
-      Pedro Dot Martinez
-    </ion-card-header>
-    <ion-card-content>
-      The British use the term "header", but the American term "head-shot" the English simply refuse to adopt.
-    </ion-card-content>
+<div class="card">
+  <ion-card class="card-2">
+  <img src={{personImage}}/>
+  <ion-card-content class="card-3">
+    <p class="cardTitle">{{person.name}}</p>
+    <p class="cardDescription">{{description}}</p>
+    <a href={{personLink}} style="text-decoration: none">
+      <p class="cardLink">Anar a la wikipedia   <ion-icon ios="md-open" md="md-open"></ion-icon></p>
+      
+    </a>
+  </ion-card-content>
   </ion-card>
--->
-
-<div class="card-background-page">
-    <ion-card>
-        <img src="{{personImage}}"/>
-        <div class="card-title"></div>
-        <div class="card-subtitle">41 Listings</div>
-      </ion-card>
-</div>
-
+</div> 
 

@@ -29,8 +29,9 @@ export class DetailsPage {
   description: any;
   entity: any;
   personImage: any;
-
+  personLink: any;
   personCard: any;
+
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http) {
@@ -58,6 +59,7 @@ export class DetailsPage {
           this.id = data.search[0].id;
           this.label = data.search[0].label;
           this.description = data.search[0].description;
+          
 
           const getUrl = wdk.getEntities({
             ids: this.id,
@@ -69,6 +71,7 @@ export class DetailsPage {
 
           this.http.get(getUrl).map(res => res.json()).subscribe(
             data => {
+ 
               
 
               this.entity = data.entities[this.id];
@@ -80,6 +83,17 @@ export class DetailsPage {
                 //Does not have image property
                 this.personImage = './assets/imgs/default_card_image.png';
               }
+
+              if (this.entity.sitelinks.hasOwnProperty('cawiki')) {
+                //Has Catalan Wikipedia link
+                const simplifiedSiteLinks = wdk.simplify.sitelinks(this.entity.sitelinks, { addUrl: true });
+                this.personLink = simplifiedSiteLinks.cawiki.url;
+
+              } else {
+                //Does not have Catalan Wikipedia link
+                this.personLink = '';
+              }
+
           
             });
 
