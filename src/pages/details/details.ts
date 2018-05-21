@@ -32,8 +32,6 @@ export class DetailsPage {
   personLink: any;
 
   personCard:  {
-    id: any,
-    label: any,
     title: any,
     description: any,
     image: any,
@@ -51,51 +49,53 @@ export class DetailsPage {
 
   }
 
-  //Retrieves the name card information
   retrievePersonCard(person) {
-    
-    const searchedPerson = wdk.searchEntities({
+    //Retrieves the name card information
+    const searchUrl = wdk.searchEntities({
       search: person.name,
       limit: 1,
-      language: 'ca'
+      language: 'en'
     });
 
-    this.http.get(searchedPerson).map(res => res.json()).subscribe(
+    this.http.get(searchUrl).map(res => res.json()).subscribe(
       data => {
+          this.id = data.search[0].id;
+          this.label = data.search[0].label;
+          this.description = data.search[0].description;
+          
 
-      this.personCard.id = data.search[0].id;
-      this.personCard.label = data.search[0].label;
-      this.personCard.description = data.search[0].description;
-        
-      const searchedEntities = wdk.getEntities({
-        ids: this.personCard.id,
-        languages: ['ca'], // returns all languages if not specified
-        //props: ['P31'], // returns all data if not specified
-        format: 'json' // defaults to json
-      })
+          const getUrl = wdk.getEntities({
+            ids: this.id,
+            languages: ['en'], // returns all languages if not specified
+            //props: ['P31'], // returns all data if not specified
+            format: 'json' // defaults to json
+          })
 
-      this.http.get(searchedEntities).map(res => res.json()).subscribe(
-        data => {
 
-        this.entity = data.entities[this.personCard.id];
-        if (this.entity.claims.hasOwnProperty('P18')) {
-          //Has image property
-          const simplifiedP18Claim = wdk.simplify.claim(this.entity.claims.P18[0]);
-          this.personImage = wdk.getImageUrl(simplifiedP18Claim, 250);
-        } else {
-          //Does not have image property
-          this.personImage = './assets/imgs/default_card_image.png';
-        }
+          this.http.get(getUrl).map(res => res.json()).subscribe(
+            data => {
 
-        if (this.entity.sitelinks.hasOwnProperty('cawiki')) {
-          //Has Catalan Wikipedia link
-          const simplifiedSiteLinks = wdk.simplify.sitelinks(this.entity.sitelinks, { addUrl: true });
-          this.personLink = simplifiedSiteLinks.enwiki.url;
+              
 
-        } else {
-          //Does not have Catalan Wikipedia link
-          this.personLink = '';
-        }
+              this.entity = data.entities[this.id];
+              if (this.entity.claims.hasOwnProperty('P18')) {
+                //Has image property
+                const simplifiedP18Claim = wdk.simplify.claim(this.entity.claims.P18[0]);
+                this.personImage = wdk.getImageUrl(simplifiedP18Claim, 250);
+              } else {
+                //Does not have image property
+                this.personImage = './assets/imgs/default_card_image.png';
+              }
+
+              if (this.entity.sitelinks.hasOwnProperty('enwiki')) {
+                //Has Catalan Wikipedia link
+                const simplifiedSiteLinks = wdk.simplify.sitelinks(this.entity.sitelinks, { addUrl: true });
+                this.personLink = simplifiedSiteLinks.enwiki.url;
+
+              } else {
+                //Does not have Catalan Wikipedia link
+                this.personLink = '';
+              }
 
           
             });
