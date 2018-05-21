@@ -7,9 +7,11 @@
 </ion-header>
 
 <ion-content padding>
-  <h1>{{person.name}}</h1>
-  <p>Data naixement: {{person.birth_year}}</p>
-  <p>Data mort: Desconegut</p>
+  <p class="nameTitle">{{person.name}}</p>
+  <p class="date"><span class="dot">· </span>Data naixement: {{person.birth_year}}</p>
+  <p class="date"><span class="dot">· </span>Data mort: Desconegut</p>
+  <img class="dbPhoto" src="./assets/imgs/default_db_image.png"/>
+  <br>
 
 <div class="card">
   <ion-card class="card-2">
@@ -19,9 +21,21 @@
     <p class="cardDescription">{{description}}</p>
     <a href={{personLink}} style="text-decoration: none">
       <p class="cardLink">Anar a la wikipedia   <ion-icon ios="md-open" md="md-open"></ion-icon></p>
-      
     </a>
   </ion-card-content>
   </ion-card>
 </div> 
+
+<div class="card">
+    <ion-card class="card-2">
+    <img src="./assets/imgs/default_card_image.png"/>
+    <ion-card-content class="card-3">
+      <p class="cardTitle">More information will come</p>
+      <p class="cardDescription">In the near future, thanks to Wikimedia Hackathon</p>
+      <a href='' style="text-decoration: none">
+        <p class="cardLink">Anar a la wikipedia   <ion-icon ios="md-open" md="md-open"></ion-icon></p>
+      </a>
+    </ion-card-content>
+    </ion-card>
+  </div> 
 

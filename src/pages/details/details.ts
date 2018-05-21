@@ -30,28 +30,31 @@ export class DetailsPage {
   entity: any;
   personImage: any;
   personLink: any;
-  personCard: any;
+
+  personCard:  {
+    title: any,
+    description: any,
+    image: any,
+    link: any
+};
+
+
 
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http) {
 
     this.person = navParams.get('data');
+    this.retrievePersonCard(this.person);
 
-    /*
-        //this.http.get('https://en.wikipedia.org/w/api.php?action=opensearch&search='+this.name+'&limit=1&format=json&origin=*').subscribe(
-   this.http.get('https://en.wikipedia.org/w/api.php?action=query&formatversion=2&prop=pageimages%7Cpageterms&titles='+this.person.name+'&format=json&origin=*').subscribe(
-    data => {
-          this.personCard = data.json();
-          console.log(this.personCard);
-      });
-    */
+  }
 
+  retrievePersonCard(person) {
     //Retrieves the name card information
     const searchUrl = wdk.searchEntities({
-      search: this.person.name,
+      search: person.name,
       limit: 1,
-      language: 'ca'
+      language: 'en'
     });
 
     this.http.get(searchUrl).map(res => res.json()).subscribe(
@@ -63,7 +66,7 @@ export class DetailsPage {
 
           const getUrl = wdk.getEntities({
             ids: this.id,
-            languages: ['ca'], // returns all languages if not specified
+            languages: ['en'], // returns all languages if not specified
             //props: ['P31'], // returns all data if not specified
             format: 'json' // defaults to json
           })
@@ -71,7 +74,7 @@ export class DetailsPage {
 
           this.http.get(getUrl).map(res => res.json()).subscribe(
             data => {
- 
+
               
 
               this.entity = data.entities[this.id];
@@ -84,10 +87,10 @@ export class DetailsPage {
                 this.personImage = './assets/imgs/default_card_image.png';
               }
 
-              if (this.entity.sitelinks.hasOwnProperty('cawiki')) {
+              if (this.entity.sitelinks.hasOwnProperty('enwiki')) {
                 //Has Catalan Wikipedia link
                 const simplifiedSiteLinks = wdk.simplify.sitelinks(this.entity.sitelinks, { addUrl: true });
-                this.personLink = simplifiedSiteLinks.cawiki.url;
+                this.personLink = simplifiedSiteLinks.enwiki.url;
 
               } else {
                 //Does not have Catalan Wikipedia link
@@ -98,7 +101,6 @@ export class DetailsPage {
             });
 
       });
-
   }
 
   ionViewDidLoad() {
