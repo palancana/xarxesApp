@@ -1,34 +1,43 @@
 page-details {
 
-      .nameTitle {
-        font-weight: Bold;
-        font-size: 20px;
-        color: #000000;
-        text-align: left;
+      .card-background-page {
+
+        ion-card {
+          position: relative;
+          text-align: center;
+          box-shadow: 0 5px 7px 0 rgba(0,0,0,0.50);
+          height: 250px;
+          background: linear-gradient(-180deg, rgba(75,74,76,0.42) 0%, #2B2A2C 98%, #000000 100%);
+          box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
+        }
+
+        .card-inner-box {
+          /* Rectangle 9: */
+
+        }
+
+      
+        .card-title {
+          position: absolute;
+          top: 36%;
+          font-size: 2.0em;
+          width: 100%;
+          font-weight: bold;
+          color: #fff;
+        }
+      
+        .card-subtitle {
+          font-size: 1.0em;
+          position: absolute;
+          top: 52%;
+          width: 100%;
+          color: #fff;
+        }
+      
       }
 
-      .date {
-        /* Data de naixement: 2: */
-        font-family: Bitter;
-        font-size: 14px;
-        color: #000000;
-        text-align: left;
-      }
 
-      .dot {
-        color: #C6E484;
-        size: 100px;
-      }
-
-      .dbPhoto {
-        width: 100px;
-        position: absolute;
-        left: 230px;
-        top: 30px;
-        box-shadow: 0 2px 3px 0 rgba(0,0,0,0.50);
-        border-radius: 2px;
-      }
-
+      ////////////
       .card {
         height: 200px;
         
@@ -51,16 +60,15 @@ page-details {
       }
 
       .cardTitle {
-        font-family: Bitter;
-        font-weight: bold;
+        font-family: Bitter-Bold;
         font-size: 16px;
         color: #F6F6F6;
         text-shadow: 0 2px 4px rgba(0,0,0,0.50);
       }
 
       .cardDescription {
-        font-family: Bitter;
-        font-size: 13px;
+        font-family: Bitter-Regular;
+        font-size: 10px;
         color: #F6F6F6;
         text-align: justify;
       }
