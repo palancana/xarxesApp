@@ -72,44 +72,45 @@ export class DetailsPage {
     
   }
 
-  getEntityData(entity) {
+  //Gets the needed entity data into JS objects to use them in HTML
+  //Can be edited to have a fallback in the near future
+  getEntityData(entity, obj) {
 
     //Gets label
     if (entity.labels.hasOwnProperty('ca')) {
       //Has Catalan label
-      this.card.person.label = entity.labels.ca;
+      this.card[obj].label = entity.labels.ca;
     } else {
       //Does not have Catalan description
-      this.card.person.label = entity.labels.en;
+      this.card[obj].label = entity.labels.en;
     }
 
     //Gets descriptions
     if (entity.descriptions.hasOwnProperty('ca')) {
       //Has Catalan description
-      this.card.person.description = entity.descriptions.ca;
+      this.card[obj].description = entity.descriptions.ca;
     } else {
       //Does not have Catalan description
-      this.card.person.description = entity.descriptions.en;
+      this.card[obj].description = entity.descriptions.en;
     }
 
     //Gets image
     if (entity.claims.hasOwnProperty('P18')) {
       //Has image property
-      this.card.person.image = wdk.getImageUrl(entity.claims.P18[0], 250);
+      this.card[obj].image = wdk.getImageUrl(entity.claims.P18[0], 250);
     } else {
       //Does not have image property
-      this.card.person.image = './assets/imgs/default_card_image.png';
+      this.card[obj].image = './assets/imgs/default_card_image.png';
     }
 
     //Gets link
     if (entity.sitelinks.hasOwnProperty('cawiki')) {
       //Has Catalan Wikipedia link
-      this.card.person.link = entity.sitelinks.cawiki.url;
+      this.card[obj].link = entity.sitelinks.cawiki.url;
     } else {
       //Does not have Catalan Wikipedia link
-      this.card.person.link = '';
+      this.card[obj].link = '';
     }
-
   }
 
   //Retrieves the person card information
@@ -139,7 +140,7 @@ export class DetailsPage {
             var entity = wdk.simplify.entity(data.entities[this.card.person.id], {addUrl: true});
             console.log(entity);
 
-            this.getEntityData(entity);
+            this.getEntityData(entity, 'person');
             
             });
       });
