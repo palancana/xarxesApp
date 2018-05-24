@@ -15,25 +15,8 @@ var wdk = require("wikidata-sdk");
 export class DetailsPage {
 
   person: any;
-
-  personEntity: any;
-
-  id: any;
-  label: any;
-  title: any;
-  description: any;
-  image: any;
-  link: any;
-  entity: any;
-  personImage: any;
-  personLink: any;
-
   searchUrl: any;
   card: any;
-
-
-
-
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http) {
 
@@ -57,14 +40,19 @@ export class DetailsPage {
         description: '',
         image: '',
         link: ''
+      },
+      familyName: {
+        id: '',
+        label: '',
+        description: '',
+        image: '',
+        link: ''
       }
     };
 
     this.person = navParams.get('data');
     this.retrievePersonCard();
-
     this.retrieveFamilyNameCard();
-
 
   }
 
@@ -138,7 +126,6 @@ export class DetailsPage {
           data => {
  
             var entity = wdk.simplify.entity(data.entities[this.card.person.id], {addUrl: true});
-            console.log(entity);
 
             this.getEntityData(entity, 'person');
             
@@ -146,17 +133,66 @@ export class DetailsPage {
       });
   }
 
-
-
-
   retrieveFamilyNameCard() {
-    var spl = this.person.name.split(" ");
-    //console.log(spl[0]);
+    //Splits the name in an array using the space delimeter
+    var familyNames = this.person.name.split(" ");
+    //Takes out of the array the first element, which is the name, to leave only family names
+    familyNames.shift();
 
+    //Goes through all the family names, iterates the array
+    for (var i = 0; i < familyNames.length; i++) {
+      //console.log(familyNames[i]);
+      //Do something
+    }
+
+    const familyName = 'Brown';
+    const sparqlq = `
+      SELECT ?item ?itemLabel ?articleEN ?articleES ?articleCA ?articleDE WHERE {
+        ?item wdt:P31 wd:Q101352.
+        ?item ?label "${familyName}"@en.
+        OPTIONAL{?articleEN schema:about ?item .
+        ?articleEN schema:isPartOf <https://en.wikipedia.org/>.}
+        OPTIONAL{?articleES schema:about ?item .
+        ?articleES schema:isPartOf <https://es.wikipedia.org/>.}
+        OPTIONAL{?articleCA schema:about ?item .
+        ?articleCA schema:isPartOf <https://ca.wikipedia.org/>.}
+        SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+      } LIMIT 1
+      `
+    const url = wdk.sparqlQuery(sparqlq);
+
+    this.http.get(this.searchUrl.ca).map(res => res.json()).subscribe(
+      data => {
+        console.log(data);
+        //var entity = wdk.simplify.entity(data.search[0], {addUrl: true});
+        //console.log(entity);
+      });
+
+    /*
+    this.http.get(this.searchUrl.ca).map(res => res.json()).subscribe(
+      data => {
+
+        this.card.person.id = data.search[0].id;
+
+        const getUrl = wdk.getEntities({
+          ids: this.card.person.id,
+          languages: ['ca', 'es', 'en'], // returns all languages if not specified
+          props: ['claims', 'descriptions', 'labels', 'sitelinks'], // returns all data if not specified
+          format: 'json' // defaults to json
+        })
+
+        this.http.get(getUrl).map(res => res.json()).subscribe(
+          data => {
+  
+            var entity = wdk.simplify.entity(data.entities[this.card.person.id], {addUrl: true});
+
+            this.getEntityData(entity, 'person');
+            
+            });
+      });
+  }
+  */
   }
 
-
-
-  
 
 }
