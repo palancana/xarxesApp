@@ -47,12 +47,20 @@ export class DetailsPage {
         description: '',
         image: '',
         link: ''
+      },
+      occupation: {
+        id: '',
+        label: '',
+        description: '',
+        image: '',
+        link: ''
       }
     };
 
     this.person = navParams.get('data');
     this.retrievePersonCard();
-    this.retrieveFamilyNameCard();
+    this.retrieveFamilyNameCardSparql();
+    this.retrieveOccupationCardSparql();
 
   }
 
@@ -99,6 +107,7 @@ export class DetailsPage {
       //Does not have Catalan Wikipedia link
       this.card[obj].link = '';
     }
+
   }
 
   //Retrieves the person card information
@@ -115,6 +124,7 @@ export class DetailsPage {
       data => {
 
         this.card.person.id = data.search[0].id;
+        console.log(this.card.person.id);
 
         const getUrl = wdk.getEntities({
           ids: this.card.person.id,
@@ -129,14 +139,16 @@ export class DetailsPage {
             var entity = wdk.simplify.entity(data.entities[this.card.person.id], {addUrl: true});
 
             this.getEntityData(entity, 'person');
+
+            var t1 = performance.now();
+            console.log("Call to retrievePersonCard took " + (t1 - t0) + " milliseconds.");
             
             });
       });
-      var t1 = performance.now();
-      console.log("Call to retrievePersonCard took " + (t1 - t0) + " milliseconds.");
+
   }
 
-  retrieveFamilyNameCard() {
+  retrieveFamilyNameCardSparql() {
     var t0 = performance.now();
     //Splits the name in an array using the space delimeter
     var familyNames = this.person.name.split(" ");
@@ -144,12 +156,13 @@ export class DetailsPage {
     familyNames.shift();
 
     //Goes through all the family names, iterates the array
+    /*
     for (var i = 0; i < familyNames.length; i++) {
       //console.log(familyNames[i]);
       //Do something
     }
+    */
 
-    const familyName = 'Rodriguez'; //${familyName}
     //Querys the needed data and has a fallback (ca => es => en) regarding itemLabel and itemDescription
     const sparql = `
       SELECT ?item ?itemLabel ?itemDescription ?image ?articleEN ?articleES ?articleCA ?articleDE WHERE {
@@ -170,7 +183,6 @@ export class DetailsPage {
 
     this.http.get(url).map(res => res.json()).subscribe(
       data => {
-        console.log(data);
 
         //Retrieves the id
         if (data.results.bindings[0].hasOwnProperty('item')) {
@@ -206,36 +218,82 @@ export class DetailsPage {
         } else {
           this.card.familyName.link = 'none';
         }
+        var t1 = performance.now();
+        console.log("Call to retrieveFamilyNameCard took " + (t1 - t0) + " milliseconds.");
 
       });
 
-    /*
-    this.http.get(this.searchUrl.ca).map(res => res.json()).subscribe(
+  }
+
+  retrieveOccupationCardSparql(){
+    var t0 = performance.now();
+    
+    //Job to be searched in Spanish (as found in the database)
+    var occupation = "medico";
+
+
+    //Querys the needed data and has a fallback (ca => es => en) regarding itemLabel and itemDescription
+    const sparql = `
+      SELECT ?item ?itemLabel ?itemDescription ?image ?articleEN ?articleES ?articleCA ?articleDE WHERE {
+        ?item wdt:P31 wd:Q28640.
+        ?item ?label "${occupation}"@es.
+        OPTIONAL { ?item wdt:P18 ?image }
+        OPTIONAL{?articleEN schema:about ?item .
+        ?articleEN schema:isPartOf <https://en.wikipedia.org/>.}
+        OPTIONAL{?articleES schema:about ?item .
+        ?articleES schema:isPartOf <https://es.wikipedia.org/>.}
+        OPTIONAL{?articleCA schema:about ?item .
+        ?articleCA schema:isPartOf <https://ca.wikipedia.org/>.}
+        SERVICE wikibase:label { bd:serviceParam wikibase:language "ca, es, en". }
+      } LIMIT 1
+    `
+
+    const url = wdk.sparqlQuery(sparql);
+
+    this.http.get(url).map(res => res.json()).subscribe(
       data => {
 
-        this.card.person.id = data.search[0].id;
+        //Retrieves the id
+        if (data.results.bindings[0].hasOwnProperty('item')) {
+          this.card.occupation.id = data.results.bindings[0].item.value;
+        } else {
+          this.card.occupation.id = 'none';
+        }
 
-        const getUrl = wdk.getEntities({
-          ids: this.card.person.id,
-          languages: ['ca', 'es', 'en'], // returns all languages if not specified
-          props: ['claims', 'descriptions', 'labels', 'sitelinks'], // returns all data if not specified
-          format: 'json' // defaults to json
-        })
+        //Retrieves the label
+        if (data.results.bindings[0].hasOwnProperty('itemLabel')) {
+          this.card.occupation.label = data.results.bindings[0].itemLabel.value;
+        } else {
+          this.card.occupation.label = 'none';
+        }
 
-        this.http.get(getUrl).map(res => res.json()).subscribe(
-          data => {
-  
-            var entity = wdk.simplify.entity(data.entities[this.card.person.id], {addUrl: true});
+        //Retrieves the description
+        if (data.results.bindings[0].hasOwnProperty('itemDescription')) {
+          this.card.occupation.description = data.results.bindings[0].itemDescription.value;
+        } else {
+          this.card.occupation.description = 'none';
+        }
 
-            this.getEntityData(entity, 'person');
-            
-            });
+        //Retrieves the image
+        if (data.results.bindings[0].hasOwnProperty('image')) {
+          this.card.occupation.image = (data.results.bindings[0].image.value + '?width=250');
+        } else {
+          this.card.occupation.image = './assets/imgs/default_card_image.png';
+        }
+
+        //Retrieves the link. Can make a fallback in the future.
+        if (data.results.bindings[0].hasOwnProperty('articleES')) {
+          this.card.occupation.link = data.results.bindings[0].articleES.value;
+        } else {
+          this.card.occupation.link = 'none';
+        }
+        var t1 = performance.now();
+        console.log("Call to retrieveFamilyNameCard took " + (t1 - t0) + " milliseconds.");
+
       });
+
   }
-  */
-    var t1 = performance.now();
-    console.log("Call to retrieveFamilyNameCard took " + (t1 - t0) + " milliseconds.");
-  }
+
 
 
 }
