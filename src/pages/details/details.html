@@ -1,55 +1,73 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Xarxes</ion-title>
+    <ion-title>Detalls</ion-title>
   </ion-navbar>
 
 </ion-header>
 
-<ion-content padding>
-  <h1>{{person.name}}</h1>
-  <p>Data naixement: {{person.birth_year}}</p>
-  <p>Data mort: Desconegut</p>
+  <ion-content class="content" padding>
 
-<div class="card">
-  <ion-card class="card-2">
-  <img src={{card.person.image}}/>
-  <ion-card-content class="card-3">
-    <p class="cardTitle">{{card.person.label}}</p>
-    <p class="cardDescription">{{card.person.description}}</p>
-    <a href={{card.person.link}} style="text-decoration: none">
-      <p class="cardLink">Anar a la wikipedia   <ion-icon ios="md-open" md="md-open"></ion-icon></p>
-      
-    </a>
-  </ion-card-content>
-  </ion-card>
-</div> 
+    <ion-row>
+    <ion-col class="basic-info" col-8>
+      <p class="title">{{person.name}}<p>
+      <p class="webLink">Anar a la web <ion-icon ios="md-open" md="md-open"></ion-icon></p>
+      <p class="date"> <span class="dot">●</span> Data naixement: {{person.birth_year}}</p>
+      <p class="date"> <span class="dot">●</span> Data mort: Desconeguda</p>
+      <p class="favorites"><ion-icon class="star-icon" ios="md-star-outline" md="md-star-outline"></ion-icon> Afegir a favorits</p>
+      </ion-col>
+  
+    <ion-col col-4 class="image-box">
+      <img class="person-image" src={{person.image}}/>
+    </ion-col>
+  </ion-row>
 
-<div class="card">
-  <ion-card class="card-2">
-  <img src={{card.familyName.image}}/>
-  <ion-card-content class="card-3">
-    <p class="cardTitle">{{card.familyName.label}}</p>
-    <p class="cardDescription">{{card.familyName.description}}</p>
-    <a href={{card.familyName.link}} style="text-decoration: none">
-      <p class="cardLink">Anar a la wikipedia   <ion-icon ios="md-open" md="md-open"></ion-icon></p>
-      
-    </a>
-  </ion-card-content>
-  </ion-card>
-</div> 
 
-<div class="card">
-  <ion-card class="card-2">
-  <img src={{card.occupation.image}}/>
-  <ion-card-content class="card-3">
-    <p class="cardTitle">{{card.occupation.label}}</p>
-    <p class="cardDescription">{{card.occupation.description}}</p>
-    <a href={{card.occupation.link}} style="text-decoration: none">
-      <p class="cardLink">Anar a la wikipedia   <ion-icon ios="md-open" md="md-open"></ion-icon></p>
-      
-    </a>
-  </ion-card-content>
-  </ion-card>
-</div> 
+  <div>
+  
+  
+  <p class="card-topic" col-6>Informació personal</p>
+  <div class="card">
+    <ion-card class="card-2">
+    <img src={{card.person.image}}/>
+    <ion-card-content class="card-3">
+      <p class="card-title">{{card.person.label}}</p>
+      <p class="card-description">{{card.person.description}}</p>
+      <a href={{card.person.link}} style="text-decoration: none">
+        <p class="card-link">Anar a la wikipedia   <ion-icon ios="md-open" md="md-open"></ion-icon></p> 
+      </a>
+    </ion-card-content>
+    </ion-card>
+  </div> 
+
+  <p class="card-topic" col-6>Cognom</p>
+  <div class="card">
+    <ion-card class="card-2">
+    <img src={{card.familyName.image}}/>
+    <ion-card-content class="card-3">
+      <p class="card-title">{{card.familyName.label}}</p>
+      <p class="card-description">{{card.familyName.description}}</p>
+      <a href={{card.familyName.link}} style="text-decoration: none">
+        <p class="card-link">Anar a la wikipedia   <ion-icon ios="md-open" md="md-open"></ion-icon></p>
+      </a>
+    </ion-card-content>
+    </ion-card>
+  </div> 
+
+  <p class="card-topic" col-6>Ocupació</p>
+  <div class="card">
+    <ion-card class="card-2">
+    <img src={{card.occupation.image}}/>
+    <ion-card-content class="card-3">
+      <p class="card-title">{{card.occupation.label}}</p>
+      <p class="card-description">{{card.occupation.description}}</p>
+      <a href={{card.occupation.link}} style="text-decoration: none">
+        <p class="card-link">Anar a la wikipedia   <ion-icon ios="md-open" md="md-open"></ion-icon></p>
+      </a>
+    </ion-card-content>
+    </ion-card>
+  </div> 
+</div>
+</ion-content>
+
 

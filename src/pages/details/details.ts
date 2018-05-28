@@ -58,6 +58,7 @@ export class DetailsPage {
     };
 
     this.person = navParams.get('data');
+    this.person.image = './assets/imgs/default_person_image.png';
     this.retrievePersonCard();
     this.retrieveFamilyNameCardSparql();
     this.retrieveOccupationCardSparql();

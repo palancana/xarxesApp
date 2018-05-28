@@ -25,6 +25,7 @@ export class SearchPage {
   }
 
   showHideBox() {
+    /*
     if (this.shouldHide == true) {
       this.shouldHide = false;
       this.filtersButtonText = "- filtres";
@@ -32,14 +33,7 @@ export class SearchPage {
       this.shouldHide = true;
       this.filtersButtonText = "+ filtres";
     }
-
-    /*
-    var x = document.getElementById("box");
-    if(x.style.display == "none") {
-      x.style.display = "block";
-    } else {
-      x.style.display = "none";
-    }*/
+    */
 
   }
 
