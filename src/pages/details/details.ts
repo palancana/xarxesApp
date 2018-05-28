@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+import { Camera, CameraOptions } from '@ionic-native/camera';
+
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 declare var require: any;
@@ -18,7 +20,7 @@ export class DetailsPage {
   searchUrl: any;
   card: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http, private camera: Camera) {
 
     this.searchUrl = {
       ca: '',
@@ -294,6 +296,24 @@ export class DetailsPage {
 
       });
 
+  }
+
+  openCamera() {
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
+    
+    this.camera.getPicture(options).then((imageData) => {
+     // imageData is either a base64 encoded string or a file URI
+     // If it's base64:
+     let base64Image = 'data:image/jpeg;base64,' + imageData;
+     //console.log(base64Image); Do something with the base64 image
+    }, (err) => {
+     // Handle error
+    });
   }
 
 }
