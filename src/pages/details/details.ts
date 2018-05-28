@@ -141,7 +141,7 @@ export class DetailsPage {
             this.getEntityData(entity, 'person');
 
             var t1 = performance.now();
-            console.log("Call to retrievePersonCard took " + (t1 - t0) + " milliseconds.");
+            //console.log("Call to retrievePersonCard took " + (t1 - t0) + " milliseconds.");
             
             });
       });
@@ -163,9 +163,10 @@ export class DetailsPage {
     }
     */
 
-    //Querys the needed data and has a fallback (ca => es => en) regarding itemLabel and itemDescription
+    //Querys the needed data and has a fallback (ca => es => en) regarding 
+    //itemLabel and itemDescription
     const sparql = `
-      SELECT ?item ?itemLabel ?itemDescription ?image ?articleEN ?articleES ?articleCA ?articleDE WHERE {
+      SELECT ?item ?itemLabel ?itemDescription ?image ?articleEN ?articleES ?articleCA WHERE {
         ?item wdt:P31 wd:Q101352.
         ?item ?label "${familyNames[0]}"@en.
         OPTIONAL { ?item wdt:P18 ?image }
@@ -219,7 +220,7 @@ export class DetailsPage {
           this.card.familyName.link = 'none';
         }
         var t1 = performance.now();
-        console.log("Call to retrieveFamilyNameCard took " + (t1 - t0) + " milliseconds.");
+        //console.log("Call to retrieveFamilyNameCard took " + (t1 - t0) + " milliseconds.");
 
       });
 
@@ -234,7 +235,7 @@ export class DetailsPage {
 
     //Querys the needed data and has a fallback (ca => es => en) regarding itemLabel and itemDescription
     const sparql = `
-      SELECT ?item ?itemLabel ?itemDescription ?image ?articleEN ?articleES ?articleCA ?articleDE WHERE {
+      SELECT ?item ?itemLabel ?itemDescription ?image ?articleEN ?articleES ?articleCA WHERE {
         ?item wdt:P31 wd:Q28640.
         ?item ?label "${occupation}"@es.
         OPTIONAL { ?item wdt:P18 ?image }
@@ -288,12 +289,10 @@ export class DetailsPage {
           this.card.occupation.link = 'none';
         }
         var t1 = performance.now();
-        console.log("Call to retrieveFamilyNameCard took " + (t1 - t0) + " milliseconds.");
+        //console.log("Call to retrieveOccupationCard took " + (t1 - t0) + " milliseconds.");
 
       });
 
   }
-
-
 
 }
