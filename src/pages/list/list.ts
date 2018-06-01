@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DetailsPage } from '../details/details';
 
-import { Http } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 @IonicPage()
@@ -19,7 +19,11 @@ export class ListPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http) {
 
     this.name = navParams.get('data');
-    //console.log(this.name);
+    console.log(this.name);
+
+
+
+
 
 
     this.http.get('https://swapi.co/api/people/?search='+ this.name).map(res => res.json()).subscribe(
@@ -28,7 +32,7 @@ export class ListPage {
           //console.log(this.peoples);
       },
       err => {
-          console.log("Oops!");
+          console.log("Oops2!");
       }
     );
 
@@ -46,7 +50,21 @@ export class ListPage {
   }
 
   ionViewDidLoad() {
-    //console.log('ionViewDidLoad ListPage');
+
+    const searchUrl = 'http://158.109.8.76/xarxes/?c=app&a=cercar';
+
+    let headers = new Headers();
+    headers.append('APPXARXES', '1');
+
+    let body = new FormData();
+    body.append('n', 'Pedro Dot');
+
+    this.http.post(searchUrl, body, {headers: headers})
+      .map(res => res.json())
+      .subscribe(data => {
+        console.log(data);
+      });
+      
   }
 
 }
