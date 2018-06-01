@@ -60,10 +60,16 @@ export class DetailsPage {
     };
 
     this.person = navParams.get('data');
-    this.person.image = './assets/imgs/default_person_image.png';
+    console.log(this.person);
+
+    /*
+    if (this.person.imatgeCara = "http://158.109.8.76/xarxes/images/fictional/placeholder.png") {
+      this.person.imatgeCara = "./assets/imgs/default_person_image.png";
+    }
+    */
     this.retrievePersonCard();
-    this.retrieveFamilyNameCardSparql();
-    this.retrieveOccupationCardSparql();
+    //this.retrieveFamilyNameCardSparql();
+    //this.retrieveOccupationCardSparql();
 
   }
 
@@ -117,37 +123,44 @@ export class DetailsPage {
   retrievePersonCard() {
     var t0 = performance.now();
 
+    let name = this.person.nom + ' ' + this.person.cognom1 + ' ' + this.person.cognom2;
+
     this.searchUrl.ca = wdk.searchEntities({
-      search: this.person.name,
+      search: name,
       limit: 1,
       language: 'ca'
     });
+    console.log(this.searchUrl);
 
     this.http.get(this.searchUrl.ca).map(res => res.json()).subscribe(
       data => {
 
-        this.card.person.id = data.search[0].id;
-        console.log(this.card.person.id);
+        console.log(data);
 
-        const getUrl = wdk.getEntities({
-          ids: this.card.person.id,
-          languages: ['ca', 'es', 'en'], // returns all languages if not specified
-          props: ['claims', 'descriptions', 'labels', 'sitelinks'], // returns all data if not specified
-          format: 'json' // defaults to json
-        })
+        if (data.search.length != 0 ) {
+          this.card.person.id = data.search[0].id;
+        
+          const getUrl = wdk.getEntities({
+            ids: this.card.person.id,
+            languages: ['ca', 'es', 'en'], // returns all languages if not specified
+            props: ['claims', 'descriptions', 'labels', 'sitelinks'], // returns all data if not specified
+            format: 'json' // defaults to json
+          })
 
-        this.http.get(getUrl).map(res => res.json()).subscribe(
-          data => {
- 
-            var entity = wdk.simplify.entity(data.entities[this.card.person.id], {addUrl: true});
+          this.http.get(getUrl).map(res => res.json()).subscribe(
+            data => {
+  
+              var entity = wdk.simplify.entity(data.entities[this.card.person.id], {addUrl: true});
 
-            this.getEntityData(entity, 'person');
+              this.getEntityData(entity, 'person');
 
-            var t1 = performance.now();
-            //console.log("Call to retrievePersonCard took " + (t1 - t0) + " milliseconds.");
-            
-            });
+              var t1 = performance.now();
+              //console.log("Call to retrievePersonCard took " + (t1 - t0) + " milliseconds.");
+              
+              });
+        }
       });
+      
 
   }
 

@@ -47,17 +47,17 @@
 
     </div>
 
-    <ion-card class="card-item" *ngFor="let person of peoples" (click)="showDetailOf(person)">
+    <ion-card class="card-item" *ngFor="let person of people" (click)="showDetailOf(person)">
         <ion-icon class="card-arrow" ios="ios-arrow-forward" md="ios-arrow-forward"></ion-icon>
       <ion-card-content no-padding>
         <ion-card-title class="card-title" item-end>
-          <h1>{{person.name}}</h1>
+          <h1>{{person.nom}} {{person.cognom1}} {{person.cognom2}}</h1>
             
         </ion-card-title>
 
         <div>
-          <p class="card-place">{{person.hair_color}}</p>
-          <p class="card-dates">{{person.birth_year}}</p>
+          <p class="card-place">{{person.padrons}}</p>
+          <p class="card-dates">{{person.dataNaix}}</p>
         </div>
 
         </ion-card-content>

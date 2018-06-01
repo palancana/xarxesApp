@@ -12,15 +12,15 @@
 
     <ion-row>
     <ion-col class="basic-info" col-8>
-      <p class="person-title">{{person.name}}<p>
-      <p class="webLink">Anar a la web <ion-icon ios="md-open" md="md-open"></ion-icon></p>
-      <p class="date"> <span class="dot">●</span> Data naixement: {{person.birth_year}}</p>
+      <p class="person-title">{{person.nom}} {{person.cognom1}} {{person.cognom2}}<p>
+      <a href={{person.urlWeb}}><p class="webLink">Anar a la web <ion-icon ios="md-open" md="md-open"></ion-icon></p></a>
+      <p class="date"> <span class="dot">●</span> Data naixement: {{person.dataNaix}}</p>
       <p class="date"> <span class="dot">●</span> Data mort: Desconeguda</p>
       <p class="favorites"><ion-icon class="star-icon" ios="md-star-outline" md="md-star-outline"></ion-icon> Afegir a favorits</p>
       </ion-col>
   
     <ion-col col-4 class="image-box">
-      <img class="person-image" src={{person.image}} (click)="openCamera()"/>
+      <img class="person-image" src={{person.imatgeCara}} (click)="openCamera()"/>
     </ion-col>
   </ion-row>
 

@@ -12,29 +12,13 @@ import 'rxjs/add/operator/map';
 })
 export class ListPage {
 
-  peoples: any;
+  people: any;
   name: any;
   wiki: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http) {
 
     this.name = navParams.get('data');
-    console.log(this.name);
-
-
-
-
-
-
-    this.http.get('https://swapi.co/api/people/?search='+ this.name).map(res => res.json()).subscribe(
-      data => {
-          this.peoples = data.results;
-          //console.log(this.peoples);
-      },
-      err => {
-          console.log("Oops2!");
-      }
-    );
 
   }
 
@@ -57,12 +41,13 @@ export class ListPage {
     headers.append('APPXARXES', '1');
 
     let body = new FormData();
-    body.append('n', 'Pedro Dot');
+    body.append('n', this.name);
 
     this.http.post(searchUrl, body, {headers: headers})
       .map(res => res.json())
       .subscribe(data => {
-        console.log(data);
+        this.people = data.persones;
+        console.log(data.persones);
       });
       
   }
