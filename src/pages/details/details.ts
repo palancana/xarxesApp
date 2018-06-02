@@ -161,7 +161,7 @@ export class DetailsPage {
               this.getEntityData(entity, 'person');
 
               var t1 = performance.now();
-              //console.log("Call to retrievePersonCard took " + (t1 - t0) + " milliseconds.");
+              console.log("Call to retrievePersonCard took " + (t1 - t0) + " milliseconds.");
               
               });
         }
@@ -238,7 +238,7 @@ export class DetailsPage {
           this.card.familyName.link = 'none';
         }
         var t1 = performance.now();
-        //console.log("Call to retrieveFamilyNameCard took " + (t1 - t0) + " milliseconds.");
+        console.log("Call to retrieveFamilyNameCard took " + (t1 - t0) + " milliseconds.");
       }
       });
     
@@ -311,7 +311,7 @@ export class DetailsPage {
           this.card.occupation.link = 'none';
         }
         var t1 = performance.now();
-        //console.log("Call to retrieveOccupationCard took " + (t1 - t0) + " milliseconds.");
+        console.log("Call to retrieveOccupationCard took " + (t1 - t0) + " milliseconds.");
       }
       });
 
@@ -329,7 +329,7 @@ export class DetailsPage {
      // imageData is either a base64 encoded string or a file URI
      // If it's base64:
      let base64Image = 'data:image/jpeg;base64,' + imageData;
-     //console.log(base64Image); Do something with the base64 image
+     console.log(base64Image); //Do something with the base64 image
     }, (err) => {
      // Handle error
     });
