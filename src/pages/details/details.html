@@ -27,7 +27,7 @@
 
   <div>
   
-  
+  <div [hidden]="hidePersonCard">
   <p class="card-topic" col-6>Informació personal</p>
   <div class="card">
     <ion-card class="card-2">
@@ -41,7 +41,9 @@
     </ion-card-content>
     </ion-card>
   </div> 
+  </div>
 
+  <div [hidden]="hideFamilyNameCard">
   <p class="card-topic" col-6>Cognom</p>
   <div class="card">
     <ion-card class="card-2">
@@ -54,8 +56,10 @@
       </a>
     </ion-card-content>
     </ion-card>
+    </div>
   </div> 
 
+  <div [hidden]="hideOccupationCard">
   <p class="card-topic" col-6>Ocupació</p>
   <div class="card">
     <ion-card class="card-2">
@@ -69,6 +73,7 @@
     </ion-card-content>
     </ion-card>
   </div> 
+  </div>
 </div>
 </ion-content>
 

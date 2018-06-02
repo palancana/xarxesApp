@@ -19,8 +19,15 @@ export class DetailsPage {
   person: any;
   searchUrl: any;
   card: any;
+  hidePersonCard: boolean;
+  hideFamilyNameCard: boolean;
+  hideOccupationCard: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http, private camera: Camera) {
+
+    this.hidePersonCard = true;
+    this.hideFamilyNameCard = true;
+    this.hideOccupationCard = true;
 
     this.searchUrl = {
       ca: '',
@@ -68,8 +75,8 @@ export class DetailsPage {
     }
     */
     this.retrievePersonCard();
-    //this.retrieveFamilyNameCardSparql();
-    //this.retrieveOccupationCardSparql();
+    this.retrieveFamilyNameCardSparql();
+    this.retrieveOccupationCardSparql();
 
   }
 
@@ -135,9 +142,8 @@ export class DetailsPage {
     this.http.get(this.searchUrl.ca).map(res => res.json()).subscribe(
       data => {
 
-        console.log(data);
-
         if (data.search.length != 0 ) {
+          this.hidePersonCard = false;
           this.card.person.id = data.search[0].id;
         
           const getUrl = wdk.getEntities({
@@ -166,25 +172,16 @@ export class DetailsPage {
 
   retrieveFamilyNameCardSparql() {
     var t0 = performance.now();
-    //Splits the name in an array using the space delimeter
-    var familyNames = this.person.name.split(" ");
-    //Takes out of the array the first element, which is the name, to leave only family names
-    familyNames.shift();
 
-    //Goes through all the family names, iterates the array
-    /*
-    for (var i = 0; i < familyNames.length; i++) {
-      //console.log(familyNames[i]);
-      //Do something
-    }
-    */
+    //Converts first letter to Upper Case
+    let cognom1 = this.person.cognom1.charAt(0).toUpperCase() + this.person.cognom1.slice(1);
 
     //Querys the needed data and has a fallback (ca => es => en) regarding 
     //itemLabel and itemDescription
     const sparql = `
       SELECT ?item ?itemLabel ?itemDescription ?image ?articleEN ?articleES ?articleCA WHERE {
         ?item wdt:P31 wd:Q101352.
-        ?item ?label "${familyNames[0]}"@en.
+        ?item ?label "${cognom1}"@en.
         OPTIONAL { ?item wdt:P18 ?image }
         OPTIONAL{?articleEN schema:about ?item .
         ?articleEN schema:isPartOf <https://en.wikipedia.org/>.}
@@ -200,6 +197,11 @@ export class DetailsPage {
 
     this.http.get(url).map(res => res.json()).subscribe(
       data => {
+        
+        console.log(data);
+
+        if (data.results.bindings.length != 0 ) {
+          this.hideFamilyNameCard = false;
 
         //Retrieves the id
         if (data.results.bindings[0].hasOwnProperty('item')) {
@@ -237,8 +239,9 @@ export class DetailsPage {
         }
         var t1 = performance.now();
         //console.log("Call to retrieveFamilyNameCard took " + (t1 - t0) + " milliseconds.");
-
+      }
       });
+    
 
   }
 
@@ -246,7 +249,7 @@ export class DetailsPage {
     var t0 = performance.now();
     
     //Job to be searched in Spanish (as found in the database)
-    var occupation = "medico";
+    let occupation = "medico";
 
 
     //Querys the needed data and has a fallback (ca => es => en) regarding itemLabel and itemDescription
@@ -269,6 +272,9 @@ export class DetailsPage {
 
     this.http.get(url).map(res => res.json()).subscribe(
       data => {
+
+        if (data.results.bindings.length != 0 ) {
+          this.hideOccupationCard = false;
 
         //Retrieves the id
         if (data.results.bindings[0].hasOwnProperty('item')) {
@@ -306,7 +312,7 @@ export class DetailsPage {
         }
         var t1 = performance.now();
         //console.log("Call to retrieveOccupationCard took " + (t1 - t0) + " milliseconds.");
-
+      }
       });
 
   }
