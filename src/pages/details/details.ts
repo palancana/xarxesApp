@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Platform } from 'ionic-angular';
 
 import { Camera, CameraOptions } from '@ionic-native/camera';
 
@@ -23,15 +24,20 @@ export class DetailsPage {
   hidePersonCard: boolean;
   hideFamilyNameCard: boolean;
   hideOccupationCard: boolean;
-  hideHistoricalContextCard: boolean;
+  hideHistoricalContextCards: boolean;
   historicalContextCard: any;
+  historicalContextCards: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http, private camera: Camera) {
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http, private camera: Camera, public plt: Platform) {
 
     this.hidePersonCard = true;
     this.hideFamilyNameCard = true;
     this.hideOccupationCard = true;
-    this.hideHistoricalContextCard = true;
+    this.hideHistoricalContextCards = true;
+
+    console.log('Lang is: ')
+    console.log(plt.lang());
 
     this.searchUrl = {
       ca: '',
@@ -325,7 +331,7 @@ export class DetailsPage {
     //Job to be searched in Spanish (as found in the database)
     let start = 1885;
     let end = 1976;
-
+    let fallback = "ca,es,en";
 
     //Querys the needed data and has a fallback (ca => es => en) regarding itemLabel and itemDescription
     const sparql = `
@@ -352,62 +358,48 @@ export class DetailsPage {
       OPTIONAL {
         ?item wdt:P582 ?endDate .
       }
-      SERVICE wikibase:label { bd:serviceParam wikibase:language"ca,es,en". }
+      SERVICE wikibase:label { bd:serviceParam wikibase:language"${fallback}". }
     }
     `
-
+    
     const url = wdk.sparqlQuery(sparql);
 
     this.http.get(url).map(res => res.json()).subscribe(
       data => {
 
+        //Proceed if data contains at least one result
         if (data.results.bindings.length != 0 ) {
-          this.hideHistoricalContextCard = false;
+          //Enable HTML view
+          this.hideHistoricalContextCards = false;
 
-          this.historicalContextCard = wdk.simplifySparqlResults(data);
+          //Simplify the results in an object
+          this.historicalContextCards = wdk.simplifySparqlResults(data);
 
-          console.log(this.historicalContextCard);
+          console.log(this.historicalContextCards);
 
-          for (let i in this.historicalContextCard) {
-          //Retrieves the id
-            if (this.historicalContextCard[i].hasOwnProperty('item')) {
-              this.historicalContextCard[i].id = this.historicalContextCard[i].item.value;
-            } else {
-              this.historicalContextCard[i].id = 'none';
-            }
+          //Iterates through all the results and makes sure there's information inside to avoid errors:
+          //if the content is undefined, the next var is set and so on
+          for (let i in this.historicalContextCards) {
 
-            //Retrieves the label
-            if (this.historicalContextCard[i].item.hasOwnProperty('label')) {
-              this.historicalContextCard[i].label = this.historicalContextCard[i].item.label;
-            } else {
-              this.historicalContextCard[i].label = 'none';
-            }
+            //Check label content
+            this.historicalContextCards[i].item.label = this.historicalContextCards[i].item.label 
+              || '';
 
-            //Retrieves the description
-            if (this.historicalContextCard[i].hasOwnProperty('itemDescription')) {
-              this.historicalContextCard[i].description = this.historicalContextCard[i].itemDescription;
-            } else {
-              this.historicalContextCard[i].description = 'none';
-            }
+            //Check description content
+            this.historicalContextCards[i].itemDescription = this.historicalContextCards[i].itemDescription 
+              || '';
 
-            //Retrieves the image
-            if (this.historicalContextCard[i].hasOwnProperty('image')) {
-              this.historicalContextCard[i].image = (this.historicalContextCard[i].image + '?width=250');
-            } else {
-              this.historicalContextCard[i].image = './assets/imgs/default_card_image.png';
-            }
+            //Check image content, if there's no image, default image is shown
+            this.historicalContextCards[i].image = this.historicalContextCards[i].image 
+              || './assets/imgs/default_card_image.png'
 
-            //Retrieves the link. Can make a fallback in the future.
-            if (this.historicalContextCard[i].hasOwnProperty('articleES')) {
-              this.historicalContextCard[i].link = this.historicalContextCard[i].articleES;
-            } else {
-              this.historicalContextCard[i].link = 'none';
-            }
-
+            //Retrieves the article link and makes a fallback
+            this.historicalContextCards[i].link = this.historicalContextCards[i].articleCA 
+              || this.historicalContextCards[i].articleES 
+              || this.historicalContextCards[i].articleEN 
+              || '';
         }
 
-
-      
         var t1 = performance.now();
         console.log("Call to retrieveHistoricalContextCard took " + (t1 - t0) + " milliseconds.");
       }
