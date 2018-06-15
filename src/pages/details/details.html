@@ -74,6 +74,23 @@
     </ion-card>
   </div> 
   </div>
+
+  <div [hidden]="hideHistoricalContextCard">
+    <p class="card-topic" col-6>Context históric</p>
+    <div class="card" *ngFor="let item of historicalContextCard; let i=index">
+      <ion-card class="card-2">
+      <img src={{historicalContextCard[i].image}}/>
+      <ion-card-content class="card-3">
+        <p class="card-title">{{historicalContextCard[i].label}}</p>
+        <p class="card-description">{{historicalContextCard[i].description}}</p>
+        <a href={{historicalContextCard[i].link}} style="text-decoration: none">
+          <p class="card-link">Anar a la wikipedia   <ion-icon ios="md-open" md="md-open"></ion-icon></p>
+        </a>
+      </ion-card-content>
+      </ion-card>
+    </div> 
+    </div>
+
 </div>
 </ion-content>
 

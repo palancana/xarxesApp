@@ -57,7 +57,7 @@
 
         <div>
           <p class="card-place">{{person.padrons}}</p>
-          <p class="card-dates">{{person.dataNaix}}</p>
+          <p class="card-dates">{{person.dataNaix || 'Desconeguda'}} - {{person.dataMort || 'Desconeguda'}}</p>
         </div>
 
         </ion-card-content>

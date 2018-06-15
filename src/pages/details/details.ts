@@ -5,6 +5,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { shouldCallLifecycleInitHook } from '@angular/core/src/view';
 declare var require: any;
 var wdk = require("wikidata-sdk");
 
@@ -22,12 +23,15 @@ export class DetailsPage {
   hidePersonCard: boolean;
   hideFamilyNameCard: boolean;
   hideOccupationCard: boolean;
+  hideHistoricalContextCard: boolean;
+  historicalContextCard: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http, private camera: Camera) {
 
     this.hidePersonCard = true;
     this.hideFamilyNameCard = true;
     this.hideOccupationCard = true;
+    this.hideHistoricalContextCard = true;
 
     this.searchUrl = {
       ca: '',
@@ -44,11 +48,12 @@ export class DetailsPage {
         link: '', //yes
       },
       historicalContext: {
-        id: '',
-        label: '',
-        description: '',
-        image: '',
-        link: ''
+        id: {},
+        label: {},
+        date: {},
+        description: {},
+        image: {},
+        link: {}
       },
       familyName: {
         id: '',
@@ -67,7 +72,6 @@ export class DetailsPage {
     };
 
     this.person = navParams.get('data');
-    console.log(this.person);
 
     /*
     if (this.person.imatgeCara = "http://158.109.8.76/xarxes/images/fictional/placeholder.png") {
@@ -77,6 +81,7 @@ export class DetailsPage {
     this.retrievePersonCard();
     this.retrieveFamilyNameCardSparql();
     this.retrieveOccupationCardSparql();
+    this.retrieveHistoricalContextCardSparql();
 
   }
 
@@ -137,7 +142,6 @@ export class DetailsPage {
       limit: 1,
       language: 'ca'
     });
-    console.log(this.searchUrl);
 
     this.http.get(this.searchUrl.ca).map(res => res.json()).subscribe(
       data => {
@@ -198,8 +202,6 @@ export class DetailsPage {
     this.http.get(url).map(res => res.json()).subscribe(
       data => {
         
-        console.log(data);
-
         if (data.results.bindings.length != 0 ) {
           this.hideFamilyNameCard = false;
 
@@ -312,6 +314,102 @@ export class DetailsPage {
         }
         var t1 = performance.now();
         console.log("Call to retrieveOccupationCard took " + (t1 - t0) + " milliseconds.");
+      }
+      });
+
+  }
+
+  retrieveHistoricalContextCardSparql(){
+    var t0 = performance.now();
+    
+    //Job to be searched in Spanish (as found in the database)
+    let start = 1885;
+    let end = 1976;
+
+
+    //Querys the needed data and has a fallback (ca => es => en) regarding itemLabel and itemDescription
+    const sparql = `
+    SELECT ?item ?itemLabel ?itemDescription ?pointInTime ?startDate ?endDate ?image ?articleEN ?articleES ?articleCA
+    WHERE
+    {
+      ?item wdt:P31/wdt:P279* wd:Q198 .
+      ?item wdt:P17 wd:Q29 .
+      filter ((?pointInTime > "${start}-01-01"^^xsd:dateTime && ?pointInTime < "${end}-01-01"^^xsd:dateTime) ||
+              (?startDate > "${start}-01-01"^^xsd:dateTime && ?startDate < "${end}-01-01"^^xsd:dateTime))
+      OPTIONAL { ?item wdt:P18 ?image }
+      OPTIONAL{?articleEN schema:about ?item .
+        ?articleEN schema:isPartOf <https://en.wikipedia.org/>.}
+      OPTIONAL{?articleES schema:about ?item .
+        ?articleES schema:isPartOf <https://es.wikipedia.org/>.}
+      OPTIONAL{?articleCA schema:about ?item .
+        ?articleCA schema:isPartOf <https://ca.wikipedia.org/>.}
+      OPTIONAL {
+        ?item wdt:P585 ?pointInTime .
+      }
+      OPTIONAL {
+        ?item wdt:P580 ?startDate .
+      }
+      OPTIONAL {
+        ?item wdt:P582 ?endDate .
+      }
+      SERVICE wikibase:label { bd:serviceParam wikibase:language"ca,es,en". }
+    }
+    `
+
+    const url = wdk.sparqlQuery(sparql);
+
+    this.http.get(url).map(res => res.json()).subscribe(
+      data => {
+
+        if (data.results.bindings.length != 0 ) {
+          this.hideHistoricalContextCard = false;
+
+          this.historicalContextCard = wdk.simplifySparqlResults(data);
+
+          console.log(this.historicalContextCard);
+
+          for (let i in this.historicalContextCard) {
+          //Retrieves the id
+            if (this.historicalContextCard[i].hasOwnProperty('item')) {
+              this.historicalContextCard[i].id = this.historicalContextCard[i].item.value;
+            } else {
+              this.historicalContextCard[i].id = 'none';
+            }
+
+            //Retrieves the label
+            if (this.historicalContextCard[i].item.hasOwnProperty('label')) {
+              this.historicalContextCard[i].label = this.historicalContextCard[i].item.label;
+            } else {
+              this.historicalContextCard[i].label = 'none';
+            }
+
+            //Retrieves the description
+            if (this.historicalContextCard[i].hasOwnProperty('itemDescription')) {
+              this.historicalContextCard[i].description = this.historicalContextCard[i].itemDescription;
+            } else {
+              this.historicalContextCard[i].description = 'none';
+            }
+
+            //Retrieves the image
+            if (this.historicalContextCard[i].hasOwnProperty('image')) {
+              this.historicalContextCard[i].image = (this.historicalContextCard[i].image + '?width=250');
+            } else {
+              this.historicalContextCard[i].image = './assets/imgs/default_card_image.png';
+            }
+
+            //Retrieves the link. Can make a fallback in the future.
+            if (this.historicalContextCard[i].hasOwnProperty('articleES')) {
+              this.historicalContextCard[i].link = this.historicalContextCard[i].articleES;
+            } else {
+              this.historicalContextCard[i].link = 'none';
+            }
+
+        }
+
+
+      
+        var t1 = performance.now();
+        console.log("Call to retrieveHistoricalContextCard took " + (t1 - t0) + " milliseconds.");
       }
       });
 

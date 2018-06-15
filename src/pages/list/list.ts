@@ -19,7 +19,6 @@ export class ListPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http) {
 
     this.name = navParams.get('data');
-
   }
 
   delete(chip: Element) {
@@ -47,7 +46,6 @@ export class ListPage {
       .map(res => res.json())
       .subscribe(data => {
         this.people = data.persones;
-        console.log(data.persones);
       });
       
   }
