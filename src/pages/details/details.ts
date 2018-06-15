@@ -29,7 +29,8 @@ export class DetailsPage {
   historicalContextCards: any;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http, private camera: Camera, public plt: Platform) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, 
+    public http: Http, private camera: Camera, public plt: Platform) {
 
     this.hidePersonCard = true;
     this.hideFamilyNameCard = true;
@@ -327,83 +328,101 @@ export class DetailsPage {
 
   retrieveHistoricalContextCardSparql(){
     var t0 = performance.now();
-    
-    //Job to be searched in Spanish (as found in the database)
-    let start = 1885;
-    let end = 1976;
-    let fallback = "ca,es,en";
 
-    //Querys the needed data and has a fallback (ca => es => en) regarding itemLabel and itemDescription
-    const sparql = `
-    SELECT ?item ?itemLabel ?itemDescription ?pointInTime ?startDate ?endDate ?image ?articleEN ?articleES ?articleCA
-    WHERE
-    {
-      ?item wdt:P31/wdt:P279* wd:Q198 .
-      ?item wdt:P17 wd:Q29 .
-      filter ((?pointInTime > "${start}-01-01"^^xsd:dateTime && ?pointInTime < "${end}-01-01"^^xsd:dateTime) ||
-              (?startDate > "${start}-01-01"^^xsd:dateTime && ?startDate < "${end}-01-01"^^xsd:dateTime))
-      OPTIONAL { ?item wdt:P18 ?image }
-      OPTIONAL{?articleEN schema:about ?item .
-        ?articleEN schema:isPartOf <https://en.wikipedia.org/>.}
-      OPTIONAL{?articleES schema:about ?item .
-        ?articleES schema:isPartOf <https://es.wikipedia.org/>.}
-      OPTIONAL{?articleCA schema:about ?item .
-        ?articleCA schema:isPartOf <https://ca.wikipedia.org/>.}
-      OPTIONAL {
-        ?item wdt:P585 ?pointInTime .
-      }
-      OPTIONAL {
-        ?item wdt:P580 ?startDate .
-      }
-      OPTIONAL {
-        ?item wdt:P582 ?endDate .
-      }
-      SERVICE wikibase:label { bd:serviceParam wikibase:language"${fallback}". }
-    }
-    `
-    
-    const url = wdk.sparqlQuery(sparql);
+    //Only retrieves this information if there exists information of when the person was born
+    if (this.person.dataNaix != '') {
 
-    this.http.get(url).map(res => res.json()).subscribe(
-      data => {
+      //Extracts the year from a string in which the person was born
+      let start = this.person.dataNaix.split("/").pop();
 
-        //Proceed if data contains at least one result
-        if (data.results.bindings.length != 0 ) {
-          //Enable HTML view
-          this.hideHistoricalContextCards = false;
+      //Extracts the year from a string in which the person was dead
+      //If it is not available, it makes an assumption of 70 years
+      let averageLifeExpectancy = 70;
+      let end = this.person.dataMort.split("/").pop()
+        || (Number(start) + averageLifeExpectancy);
 
-          //Simplify the results in an object
-          this.historicalContextCards = wdk.simplifySparqlResults(data);
+      //Sets de fallback method for the query
+      let fallback = 'ca,es,en';
 
-          console.log(this.historicalContextCards);
-
-          //Iterates through all the results and makes sure there's information inside to avoid errors:
-          //if the content is undefined, the next var is set and so on
-          for (let i in this.historicalContextCards) {
-
-            //Check label content
-            this.historicalContextCards[i].item.label = this.historicalContextCards[i].item.label 
-              || '';
-
-            //Check description content
-            this.historicalContextCards[i].itemDescription = this.historicalContextCards[i].itemDescription 
-              || '';
-
-            //Check image content, if there's no image, default image is shown
-            this.historicalContextCards[i].image = this.historicalContextCards[i].image 
-              || './assets/imgs/default_card_image.png'
-
-            //Retrieves the article link and makes a fallback
-            this.historicalContextCards[i].link = this.historicalContextCards[i].articleCA 
-              || this.historicalContextCards[i].articleES 
-              || this.historicalContextCards[i].articleEN 
-              || '';
+      //Querys the needed data and has a fallback regarding itemLabel and itemDescription
+      //The results are shown in ascending date order
+      const sparql = `
+        SELECT ?item ?itemLabel ?itemDescription ?startDate ?endDate ?image ?articleEN ?articleES ?articleCA
+        WHERE
+        {
+          ?item wdt:P31/wdt:P279* wd:Q198 .
+          ?item wdt:P17 wd:Q29 .
+          filter ((?pointInTime > "${start}-01-01"^^xsd:dateTime && ?pointInTime < "${end}-01-01"^^xsd:dateTime) ||
+                  (?startDate > "${start}-01-01"^^xsd:dateTime && ?startDate < "${end}-01-01"^^xsd:dateTime))
+          OPTIONAL { ?item wdt:P18 ?image }
+          OPTIONAL{?articleEN schema:about ?item .
+            ?articleEN schema:isPartOf <https://en.wikipedia.org/>.}
+          OPTIONAL{?articleES schema:about ?item .
+            ?articleES schema:isPartOf <https://es.wikipedia.org/>.}
+          OPTIONAL{?articleCA schema:about ?item .
+            ?articleCA schema:isPartOf <https://ca.wikipedia.org/>.}
+          OPTIONAL {
+            ?item wdt:P585 ?startDate .
+          }
+          OPTIONAL {
+            ?item wdt:P580 ?startDate .
+          }
+          OPTIONAL {
+            ?item wdt:P582 ?endDate .
+          }
+          SERVICE wikibase:label { bd:serviceParam wikibase:language"${fallback}". }
         }
+        ORDER BY ASC(?startDate)
+      `
+      
+      const url = wdk.sparqlQuery(sparql);
 
-        var t1 = performance.now();
-        console.log("Call to retrieveHistoricalContextCard took " + (t1 - t0) + " milliseconds.");
-      }
+      this.http.get(url).map(res => res.json()).subscribe(
+        data => {
+
+          //Proceed if data contains at least one result
+          if (data.results.bindings.length != 0 ) {
+            //Enable HTML view
+            this.hideHistoricalContextCards = false;
+
+            //Simplify the results in an object
+            this.historicalContextCards = wdk.simplifySparqlResults(data);
+
+            console.log(this.historicalContextCards);
+
+            //Iterates through all the results and makes sure there's information inside to avoid errors:
+            //if the content is undefined, the next var is set and so on
+            for (let i in this.historicalContextCards) {
+
+              //Check label content
+              this.historicalContextCards[i].item.label = this.historicalContextCards[i].item.label 
+                || '';
+
+              //Check description content
+              this.historicalContextCards[i].itemDescription = this.historicalContextCards[i].itemDescription 
+                || '';
+
+              //Check image content, if there's no image, default image is shown
+              this.historicalContextCards[i].image = this.historicalContextCards[i].image 
+                || './assets/imgs/default_card_image.png'
+
+              //Retrieves the article link and makes a fallback (ca => es => en)
+              this.historicalContextCards[i].link = this.historicalContextCards[i].articleCA 
+                || this.historicalContextCards[i].articleES 
+                || this.historicalContextCards[i].articleEN 
+                || '';
+
+              //Retrieves the event start date, simplifies it and extracts the year
+              this.historicalContextCards[i].date = wdk.wikidataTimeToSimpleDay(this.historicalContextCards[i].startDate
+                || '').split('-').shift(); 
+              console.log(this.historicalContextCards[i].date);
+          }
+
+          var t1 = performance.now();
+          console.log("Call to retrieveHistoricalContextCards took " + (t1 - t0) + " milliseconds.");
+        }
       });
+    }
 
   }
 
