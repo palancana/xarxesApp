@@ -31,33 +31,17 @@
   <p class="card-topic" col-6>Informació personal</p>
   <div class="card">
     <ion-card class="card-2">
-    <img src={{card.person.image}}/>
+    <img src={{personCard.image}}/>
     <ion-card-content class="card-3">
-      <p class="card-title">{{card.person.label}}</p>
-      <p class="card-description">{{card.person.description}}</p>
-      <a href={{card.person.link}} style="text-decoration: none">
+      <p class="card-title">{{personCard.label}}</p>
+      <p class="card-description">{{personCard.description}}</p>
+      <a href={{personCard.link}} style="text-decoration: none">
         <p class="card-link">Anar a la wikipedia   <ion-icon ios="md-open" md="md-open"></ion-icon></p> 
       </a>
     </ion-card-content>
     </ion-card>
   </div> 
   </div>
-
-  <div [hidden]="hideFamilyNameCard">
-  <p class="card-topic" col-6>Cognom</p>
-  <div class="card">
-    <ion-card class="card-2">
-    <img src={{card.familyName.image}}/>
-    <ion-card-content class="card-3">
-      <p class="card-title">{{card.familyName.label}}</p>
-      <p class="card-description">{{card.familyName.description}}</p>
-      <a href={{card.familyName.link}} style="text-decoration: none">
-        <p class="card-link">Anar a la wikipedia   <ion-icon ios="md-open" md="md-open"></ion-icon></p>
-      </a>
-    </ion-card-content>
-    </ion-card>
-    </div>
-  </div> 
 
   <div [hidden]="hideOccupationCard">
   <p class="card-topic" col-6>Ocupació</p>
@@ -75,9 +59,26 @@
   </div> 
   </div>
 
+
+  <div [hidden]="hideFamilyNameCard">
+      <p class="card-topic" col-6>Cognom</p>
+      <div class="card" *ngFor="let singleCard of familyNameCard" [hidden]="singleCard.hide">
+        <ion-card class="card-2">
+        <img src={{singleCard.image}}/>
+        <ion-card-content class="card-3">
+          <p class="card-title">{{singleCard.item.label}}</p>
+          <p class="card-description">{{singleCard.itemDescription}}</p>
+          <a href={{singleCard.link}} style="text-decoration: none">
+            <p class="card-link">Anar a la wikipedia   <ion-icon ios="md-open" md="md-open"></ion-icon></p>
+          </a>
+        </ion-card-content>
+        </ion-card>
+      </div> 
+      </div>
+
   <div [hidden]="hideHistoricalContextCards">
       <p class="card-topic" col-6>Context históric</p>
-      <div class="card" *ngFor="let singleCard of historicalContextCards">
+      <div class="card" *ngFor="let singleCard of historicalContextCards" [hidden]="singleCard.hide">
         <ion-card class="card-2">
         <img src={{singleCard.image}}/>
         <ion-card-content class="card-3">

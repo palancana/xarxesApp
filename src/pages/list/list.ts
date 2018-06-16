@@ -40,6 +40,7 @@ export class ListPage {
     headers.append('APPXARXES', '1');
 
     let body = new FormData();
+
     body.append('n', this.name);
 
     this.http.post(searchUrl, body, {headers: headers})
