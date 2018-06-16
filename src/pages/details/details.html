@@ -30,9 +30,9 @@
   <div [hidden]="hidePersonCard">
   <p class="card-topic" col-6>Informació personal</p>
   <div class="card">
-    <ion-card class="card-2">
+    <ion-card class="inner-card">
     <img src={{personCard.image}}/>
-    <ion-card-content class="card-3">
+    <ion-card-content class="card-shadow">
       <p class="card-title">{{personCard.label}}</p>
       <p class="card-description">{{personCard.description}}</p>
       <a href={{personCard.link}} style="text-decoration: none">
@@ -46,9 +46,9 @@
 <div [hidden]="hideOccupationCard">
     <p class="card-topic" col-6>Ocupació</p>
     <div class="card" *ngFor="let singleCard of occupationCard" [hidden]="singleCard.hide">
-      <ion-card class="card-2">
+      <ion-card class="inner-card">
       <img src={{singleCard.image}}/>
-      <ion-card-content class="card-3">
+      <ion-card-content class="card-shadow">
         <p class="card-title">{{singleCard.item.label}}</p>
         <p class="card-description">{{singleCard.itemDescription}}</p>
         <a href={{singleCard.link}} style="text-decoration: none">
@@ -63,9 +63,9 @@
   <div [hidden]="hideFamilyNameCard">
       <p class="card-topic" col-6>Cognom</p>
       <div class="card" *ngFor="let singleCard of familyNameCard" [hidden]="singleCard.hide">
-        <ion-card class="card-2">
+        <ion-card class="inner-card">
         <img src={{singleCard.image}}/>
-        <ion-card-content class="card-3">
+        <ion-card-content class="card-shadow">
           <p class="card-title">{{singleCard.item.label}}</p>
           <p class="card-description">{{singleCard.itemDescription}}</p>
           <a href={{singleCard.link}} style="text-decoration: none">
@@ -79,9 +79,9 @@
   <div [hidden]="hideHistoricalContextCards">
       <p class="card-topic" col-6>Context históric</p>
       <div class="card" *ngFor="let singleCard of historicalContextCards" [hidden]="singleCard.hide">
-        <ion-card class="card-2">
+        <ion-card class="inner-card">
         <img src={{singleCard.image}}/>
-        <ion-card-content class="card-3">
+        <ion-card-content class="card-shadow">
           <p class="card-title">{{singleCard.item.label}}</p>
           <p class="card-date">{{singleCard.date}}</p>
           <p class="card-description">{{singleCard.itemDescription}}</p>

@@ -9,18 +9,22 @@
 
 <ion-content>
 
-  <!-- Here goes the chips. Right now there is only two of them hardcoded for visual purposes -->
+  <!-- Here goes the chips. Right now there is only one of them hardcoded for visual purposes -->
   <div padding>
     <ion-chip class="chip" #chip1>
       <ion-label class="chip-text">{{name}}</ion-label>
+      </ion-chip>
+      <!--
       <button ion-button clear color="light" (click)="delete(chip1)">
         <ion-icon name="close"></ion-icon>
       </button>
+      -->
+
+      <!--
     </ion-chip>
 
     <ion-chip class="chip" #chip4>
       <ion-label class="chip-text">
-        <!-- Wikipedia "W" logo in SVG -->
         <img src="../assets/icon/wikipedia.svg" alt="Wikipedia Icon"/>
       </ion-label>
       <button ion-button clear color="light" (click)="delete(chip4)">
@@ -28,14 +32,12 @@
       </button>
     </ion-chip>
 
-    <!--
     <ion-chip class="chip" #chip2>
       <ion-label class="chip-text">Second filter</ion-label>
       <button ion-button clear color="light" (click)="delete(chip2)">
         <ion-icon name="close"></ion-icon>
       </button>
     </ion-chip>
-
 
         <ion-chip class="chip" #chip3>
           <ion-label class="chip-text">Date filter</ion-label>
