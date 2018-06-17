@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { ListPage } from '../list/list';
+import { Keyboard } from '@ionic-native/keyboard';
 
 @Component({
   selector: 'page-search',
@@ -18,10 +19,11 @@ export class SearchPage {
     lower:1845
 }
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, private keyboard: Keyboard) {
     this.dual = this.dual;
     this.shouldHide = true;
     this.filtersButtonText = "+ filtres";
+    keyboard.disableScroll(true);
   }
 
   showHideBox() {
