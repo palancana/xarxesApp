@@ -20,10 +20,10 @@
       </ion-col>
   
     <ion-col col-4 class="image-box">
-      <img class="person-image" src={{person.imatgeCara}} (click)="openCamera()"/>
+      <img class="person-image" [src]="person.imatgeCara" *ngIf="!photoTaken" (click)="openCamera()"/>
+      <img class="person-image" [src]="cameraImage" *ngIf="photoTaken"/>
     </ion-col>
   </ion-row>
-
 
   <div>
   
