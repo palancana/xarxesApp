@@ -40,8 +40,15 @@ export class ListPage {
     headers.append('APPXARXES', '1');
 
     let body = new FormData();
-
-    body.append('n', this.name);
+    
+    if (this.name.split(" ").length > 1) {
+      let nameOnly = this.name.substr(0,this.name.indexOf(' '));
+      let lastNameOnly = this.name.substr(this.name.indexOf(' ')+1);
+      body.append('n', nameOnly);
+      body.append('c', lastNameOnly);
+    } else {
+      body.append('n', this.name);
+    }
 
     this.http.post(searchUrl, body, {headers: headers})
       .map(res => res.json())
