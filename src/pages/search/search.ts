@@ -23,7 +23,10 @@ export class SearchPage {
     this.dual = this.dual;
     this.shouldHide = true;
     this.filtersButtonText = "+ filtres";
-    keyboard.disableScroll(true);
+  }
+
+  ionViewDidLoad() {
+    this.keyboard.disableScroll(true);
   }
 
   showHideBox() {
